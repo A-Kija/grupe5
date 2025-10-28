@@ -1,0 +1,21 @@
+h1 span {
+    color: blueviolet;
+}
+
+span {
+    color: crimson;
+    font-weight: 700;
+}
+
+span {
+    color: skyblue;
+}
+
+h1 {
+    color: #83b828;
+    font-size: 46px;
+    font-weight: 300;
+    font-family: "Rajdhani", sans-serif;
+    letter-spacing: 13px;
+}
+
