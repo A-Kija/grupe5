@@ -1,0 +1,54 @@
+body {
+    font-family: "Rajdhani", sans-serif;
+    margin: 0;
+}
+
+p.mano-tekstas-1,
+h6.mano-tekstas-1 {
+    color: skyblue;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    padding: 10px;
+}
+
+h6.mano-tekstas-1 {
+    text-transform: lowercase;
+}
+
+.mano-tekstas-2 {
+    color: orange;
+}
+
+.raudonas-tekstas {
+    color: crimson!important;
+    /* Naudoti tik išskirtinais atvejais */
+}
+
+section {
+    font-size: 0;
+    
+}
+
+.box {
+    box-sizing: border-box;
+    border: 2px solid rgb(144, 40, 140);
+    width: calc(33.3333% - 30px);
+    height: 160px;
+    font-size: 18px;
+    display: inline-block;
+    min-width: 200px;
+    /* prieš 10 metų - vėliau darysim su flex */
+    vertical-align: top; 
+    margin: 10px 15px;
+}
+
+img {
+    height: 150px
+}
+
+.box-p {
+    display: inline-block;
+    vertical-align: top; 
+    margin: 0;
+}
+
