@@ -1,0 +1,33 @@
+.box {
+    width: 150px;
+    height: 150px;
+    border: 3px solid black;
+}
+
+.box.red {
+    background-color: #dc143c70;
+    border-color: crimson;
+}
+
+.box.blue {
+    background-color: #6495ed70;
+    border-color: cornflowerblue;
+}
+
+section {
+    margin: 50px;
+    border: 1px solid gray;
+    min-height: 400px;
+}
+
+.box1 {
+    position: relative;
+    top: 30px;
+    left: 100px;
+}
+
+.box2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
