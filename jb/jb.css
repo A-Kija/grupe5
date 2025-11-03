@@ -1,0 +1,123 @@
+body {
+    background-color: #444;
+}
+
+#kas {
+    color: crimson;
+}
+
+.bu-bu {
+    color: blueviolet;
+}
+
+h2 {
+    color: darkgreen;
+}
+
+* {
+    color: aquamarine;
+}
+
+[data-kazkas="kazkam"] {
+    color: orange;
+}
+
+.labas .ate {
+    color: brown;
+}
+
+.labas.ate {
+    color: chocolate;
+}
+
+.labas {
+    color: skyblue;
+}
+
+.labukas .zuikis {
+    color: cornflowerblue;
+}
+
+.labukas>.zuikis {
+    color: darkred;
+}
+
+.bebras {
+    color: darkblue;
+    font-style: italic;
+}
+
+.bebras+div {
+    color: darkred;
+    font-style: italic;
+}
+
+.briedis {
+    color: darkblue;
+    font-style: italic;
+}
+
+.briedis ~ div {
+    color: darkred;
+    font-style: italic;
+}
+
+.box {
+    width: 200px;
+    height: 200px;
+    background-color: chocolate;
+    position: relative;
+    left: 0;
+    cursor: pointer;
+    transition: all 2s cubic-bezier(.79,.39,1,-1.1);
+}
+
+.box:hover {
+    background-color: crimson;
+    left: 50px;
+}
+
+#kas span:hover {
+    font-size: 30px;
+    color: blue;
+}
+
+input[type="text"] {
+    margin-top: 30px;
+    background-color: #444;
+    color: white;
+    border: 1px solid seagreen;
+    outline: none;
+    transition: all 0.5s;
+}
+
+input[type="text"]:focus {
+    border: 1px solid coral;
+    border-radius: 5px;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked + h4 {
+    color: crimson;
+}
+
+li:nth-child(2) {
+    color:skyblue;
+}
+
+li {
+    border-bottom: 1px solid green;
+}
+
+li:not(.vilkas) {
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+li:last-child {
+    color: violet;
+    border-bottom: none;
+}
