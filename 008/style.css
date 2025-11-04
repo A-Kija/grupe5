@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.box {
+    width: 300px;
+    height: 300px;
+    border: 2px solid black;
+    position: relative;
+}
+
+.box::after {
+    color: aliceblue;
+    content: 'cat';
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-color: chocolate;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.box::before {
+    color: aliceblue;
+    content: 'dog';
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-color: darkgreen;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+/* Minimalus puslapio plotis kuriam galioja taisyklės NUO 480px */
+@media (min-width: 480px) {
+  body {
+    background-color: lightgreen;
+  }
+}
+
+@media (min-width: 780px) {
+  body {
+    background-color: lightsalmon;
+  }
+}
+
+/* Maksimalus puslapio plotis kuriam galioja taisyklės IKI 1000px */
+@media (max-width: 1000px) {
+  .box {
+    background-color: chocolate;
+  }
+}
+
+section {
+    font-size: 0;
+    max-width: 1300px;
+    border: 1px solid gray;
+    margin: 20px auto;
+}
+
+section .block {
+    background-color: cornflowerblue;
+    margin: 20px;
+    display: inline-block;
+    width: calc(100% - 40px);
+    font-size: 20px;
+}
+
+@media (min-width: 480px) {
+    section .block {
+        width: calc(50% - 40px);
+        font-size: 40px;
+    }
+}
+
+@media (min-width: 780px) {
+    section .block {
+        width: calc(25% - 40px);
+        font-size: 60px;
+    }
+}
+
+
+
+
