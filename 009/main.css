@@ -1,0 +1,1 @@
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif}ul,li,p,a{list-style:none;text-decoration:none;margin:0;padding:0}#app{width:100%;display:flex;flex-direction:column;align-items:center}header{width:100%;max-width:1200px;padding:0 16px}header .logo{font-size:24px;font-weight:bold;padding:8px 0}

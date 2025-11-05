@@ -1,0 +1,47 @@
+$xl: 1200px;
+$lg: 992px;
+$md: 768px;
+$sm: 480px;
+
+$padding-big: 24px;
+$padding-medium: 16px;
+$padding-small: 8px;
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+ul,
+li,
+p,
+a {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    max-width: $xl;
+    padding: 0 $padding-medium;
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        padding: $padding-small 0;
+    }
+}
