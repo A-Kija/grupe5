@@ -63,8 +63,12 @@ header {
 
 
         ul.desktop {
-            display: flex;
+            display: none;
             column-gap: 9px;
+
+            @media (min-width: $sm) {
+                display: flex;
+            }
 
 
             li {
@@ -76,6 +80,7 @@ header {
 
             li.sub {
                 position: relative;
+
                 ul {
                     position: absolute;
                     max-height: 0;
@@ -83,6 +88,7 @@ header {
                     transition: max-height 0.3s ease-in-out;
                     background-color: $green;
                     min-width: 200px;
+
                     li {
                         padding: 5px $padding-big;
                     }
@@ -93,11 +99,99 @@ header {
                         max-height: 150px;
                     }
                 }
+            } // li.sub
+        } // ul.desktop
+
+        label.hamburger {
+            height: 25px;
+            display: block;
+
+            div {
+                display: block;
+                position: relative;
+                height: 5px;
+                width: 30px;
+                background-color: $yellow;
+
+                &::before,
+                &::after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    height: 5px;
+                    width: 30px;
+                    background-color: $yellow;
+                }
+
+                &::before {
+                    bottom: -10px;
+                }
+
+                &::after {
+                    bottom: -20px;
+                }
+            }
+
+            @media (min-width: $sm) {
+                display: none;
             }
         }
     }
 
-    &>nav:nth-child(2) {
+    &>nav:nth-child(3) {
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: $gray;
+        right: -300px;
+        transition: all 0.4s;
+
+        ul.mobile {
+            display: flex;
+            row-gap: 30px;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: center;
+            width: 300px;
+            padding-left: 36px;
+
+            li {
+                a {
+                    font-size: 40px;
+                    color: $yellow;
+                }
+            }
+
+            li.sub {
+                li {
+                    padding-left: 30px;
+
+                    a {
+                        font-size: 30px;
+                        color: $yellow;
+                    }
+                }
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 40px;
+            font-weight: 700;
+            color: $yellow;
+            user-select: none;
+        }
+    }
+
+    &>input:nth-child(2) {
         display: none;
+
+        &:checked {
+            &+nav {
+                right: 0;
+            }
+        }
     }
 }
