@@ -7,6 +7,12 @@ $padding-big: 24px;
 $padding-medium: 16px;
 $padding-small: 8px;
 
+$red: #ED254E;
+$yellow: #F9DC5C;
+$green: #C2EABD;
+$blue: #011936;
+$gray: #465362;
+
 
 * {
     box-sizing: border-box;
@@ -38,10 +44,60 @@ header {
     width: 100%;
     max-width: $xl;
     padding: 0 $padding-medium;
+    height: 90px;
+    background-color: $green;
+    display: flex;
+    align-items: center;
 
     .logo {
         font-size: 24px;
         font-weight: bold;
         padding: $padding-small 0;
+    }
+
+    &>nav:nth-child(1) {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+
+
+        ul.desktop {
+            display: flex;
+            column-gap: 9px;
+
+
+            li {
+                a {
+                    font-size: 21px;
+                    color: $red;
+                }
+            }
+
+            li.sub {
+                position: relative;
+                ul {
+                    position: absolute;
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: max-height 0.3s ease-in-out;
+                    background-color: $green;
+                    min-width: 200px;
+                    li {
+                        padding: 5px $padding-big;
+                    }
+                }
+
+                &:hover {
+                    ul {
+                        max-height: 150px;
+                    }
+                }
+            }
+        }
+    }
+
+    &>nav:nth-child(2) {
+        display: none;
     }
 }
