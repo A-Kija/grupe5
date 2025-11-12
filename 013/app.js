@@ -86,8 +86,65 @@ if (10 === '10') {
 }
 
 
-if ('a' > 'A') {
+if ('Bebras' > 'Barsukas') {
     console.log('TAIP');
 } else {
     console.log('NE');
 }
+
+
+const animalInput = document.querySelector('input');
+
+animalInput.style.border = '1px solid skyblue';
+
+animalInput.addEventListener('input', _ => {
+    console.log('Rašo!', animalInput.value);
+    if (animalInput.value.length > 7) {
+        animalInput.style.border = '1px solid crimson';
+    } else {
+        animalInput.style.border = '1px solid skyblue';
+    }
+});
+
+
+if (55 > 111) {
+    console.log('Šaka 1');
+}
+
+else if (5 == 51) {
+    console.log('Šaka 2');
+}
+
+else if (5 == 5) {
+    console.log('Šaka 55');
+}
+
+else {
+    console.log('Šaka 3');
+}
+
+console.clear();
+
+console.log('true || true', true || true);
+console.log('true || false', true || false);
+console.log('false || true', false || true);
+console.log('false || false', false || false);
+
+console.log('true && true', true && true);
+console.log('true && false', true && false);
+console.log('false && true', false && true);
+console.log('false && false', false && false);
+
+if (5 > 10 || 10 > 3) {
+    console.log('TAIP');
+} else {
+    console.log('NE');
+}
+
+if (5 > 10 && 10 > 3) {
+    console.log('TAIP');
+} else {
+    console.log('NE');
+}
+
+
