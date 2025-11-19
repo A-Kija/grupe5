@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello, darkness my old friend</title>
+    <script src="app.js" defer></script>
+    <style>
+        body {
+            background-color: black;
+            color: lightslategray;
+        }
+
+        button {
+            padding: 20px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active {
+            transform: translateY(-2px) scale(0.95);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="nr1">Click Me 1!</button>
+    <button id="nr2">Click Me 2!</button>
+
+</body>
+
+</html>
