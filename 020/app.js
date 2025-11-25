@@ -62,3 +62,59 @@ console.clear();
 
 console.log(findResultIndex);
 
+// 1. Koks meškos numeris - numerį atspausdinti konsolėje
+
+const allAnimalsLi = document.querySelectorAll('li'); // visi LI elementai
+let meska = -1;
+
+console.log(allAnimalsLi); // visi elementai
+
+// nekreipian dėmesio - bus vėliau
+console.log(Array.from(allAnimalsLi).map(el => el.innerText));
+
+for (let i = 0; i < allAnimalsLi.length; i++) {
+
+    // allAnimalsLi ---> visi elementai
+    // allAnimalsLi[i] ---> konkretus vienas elementas
+    // allAnimalsLi[i].innerText ---> konkretaus vieno elemento tekstas
+
+    if (allAnimalsLi[i].innerText == 'Meška') {
+                
+        meska = i; // meska gauna elemento indeksą 4
+        break; // einam lauk iš ciklo
+    }
+}
+
+console.log('Meška:', meska + 1); // +1 pakoreguojam indeksą, kad jis taptų eilės numeriu
+
+// 2. Sąraše varną nuspalvinkit baltai
+
+for (let i = 0; i < allAnimalsLi.length; i++) {
+
+    if (allAnimalsLi[i].innerText == 'Varna') {
+         // allAnimalsLi[i] varnos elementas
+        allAnimalsLi[i].style.color = 'white'; // stilius ant elemento kuris turi varnos tekstą
+        break;
+    }
+
+}
+
+// Sąraše visus išskyrus Pelėdą ir Gaidį nuspalvinti orange
+
+for (let i = 0; i < allAnimalsLi.length; i++) {
+
+    if (allAnimalsLi[i].innerText == 'Pelėda' || allAnimalsLi[i].innerText == 'Gaidys') {
+        continue; // pradeda naują iteraciją (ciklo prasukimą) toliau +1
+    }
+
+    allAnimalsLi[i].style.color = 'orange';
+}
+
+
+// su if neigiama logika
+// for (let i = 0; i < allAnimalsLi.length; i++) {
+
+//     if (allAnimalsLi[i].innerText != 'Pelėda' && allAnimalsLi[i].innerText != 'Gaidys') {
+//         allAnimalsLi[i].style.color = 'orange';
+//     }
+// }
