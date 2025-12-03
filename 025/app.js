@@ -118,7 +118,20 @@ if (getOnePenPrice(product1) < getOnePenPrice(product2)) {
     console.log(product2.title);
 }
 
+/*
+Naujos statybos name parduodami du butai (analogija product1 ir product2)
 
+Butas. numeris: 45; užbaigtumas: "euroremontas", balkonas: nėra, kambariai: virtuvė 10m2,
+miegamasis: 15m2, svetainė: 18m2; kaina 75500eur
+
+Butas. numeris: 12; užbaigtumas: "neįrengtas", balkonas: yra,  kambariai: virtuvė 9m2,
+miegamasis: 12m2, svetainė: 20m2, vaikų kambarys: 14m2; kaina 92500eur
+
+Klausimas pirmas: Kuris butas turi daugiau kambarių?
+Klausimas antras: Kurio buto kvadratinis metras yra brangesnis (nesikartojome šito, tiesiog kam
+ per paprastas pirmas klausimas, kad turėtų ką veikti - tema masyvo metodai)
+
+*/
 
    
 
