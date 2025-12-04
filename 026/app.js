@@ -107,5 +107,87 @@ const skaiciusA2 = rand(1, 25);
 const skaiciusB1 = rand(1, 25);
 const skaiciusB2 = rand(1, 25);
 
-console.log('A1', skaiciusA1, 'A2', skaiciusA2, 'B1', skaiciusB1, 'B2', skaiciusB2)
+console.log('A1', skaiciusA1, 'A2', skaiciusA2, 'B1', skaiciusB1, 'B2', skaiciusB2);
 
+// priskiriamoji sąlyga - ternaris
+
+const A = skaiciusA1 > skaiciusA2 ? skaiciusA1 : skaiciusA2;
+// salyga skaiciusA1 > skaiciusA2
+// jeigu sąlyga true tai A po ? = skaiciusA1
+// jeigu sąlyga false tai A po : = skaiciusA1
+
+const B = skaiciusB1 > skaiciusB2 ? skaiciusB1 : skaiciusB2;
+
+const rez = A < B ? A : B;
+
+const rez2 = Math.min(Math.max(skaiciusA1, skaiciusA2), Math.max(skaiciusB1, skaiciusB2));
+
+
+let didesnisA;
+let didesnisB;
+let mazesnis;
+
+if (skaiciusA1 > skaiciusA2) {
+    didesnisA = skaiciusA1;
+} else {
+    didesnisA = skaiciusA2;
+}
+
+if (skaiciusB1 > skaiciusB2) {
+    didesnisB = skaiciusB1;
+} else {
+    didesnisB = skaiciusB2;
+}
+
+if (didesnisA < didesnisB) {
+    mazesnis = didesnisA;
+} else {
+    mazesnis = didesnisB;
+}
+
+console.log(rez, rez2, mazesnis);
+
+// Duoti 2 random skaičiai nuo 1 iki 17.
+// A. ar jie abudu yra didesni nei 11?
+// B. ar yra bent vienas skaičius didesnis už 14?
+
+console.clear();
+
+const skaiciusC1 = rand(1, 17);
+const skaiciusC2 = rand(1, 17);
+
+console.log('C1', skaiciusC1, 'C2', skaiciusC2);
+
+if (skaiciusC1 > 11 && skaiciusC2 > 11) {
+    console.log('Abu didesni nei 11');
+} else {
+    console.log('Vinas ar abu ne didesni nei 11');
+}
+
+if (skaiciusC1 > 14 || skaiciusC2 > 14) {
+    console.log('Kažkuris didesnis nei 14');
+} else {
+    console.log('Nei vienas ne didesnis nei 14');
+}
+
+// Atspausdinkite žodžio "Karakumai" kas antrą raide ====> Krkmi 
+
+const word = 'Karakumai';
+let word2 = '';
+let word3 = '';
+
+for (let i = 0; i < word.length; i = i + 2) { // einam kas du
+    word2 = word2 + word[i];
+}
+
+for (let i = 0; i < word.length; i++) {
+    // if (i % 2 == 0) {
+    //     word3 = word3 + word[i];
+    // }
+    if (i % 2) {
+        continue;
+    }
+    word3 = word3 + word[i];
+}
+
+console.log(word2, word3);
