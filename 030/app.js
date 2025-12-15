@@ -53,6 +53,34 @@ const render = _ => {
         const rowHtml = listRowTemplate.content.cloneNode(true);
         const colorSq = rowHtml.querySelector('[data-color-sq]');
 
+        //****DELETE */
+        
+        const deleteButton = rowHtml.querySelector('[data-delete-sq]');
+
+        // colorItem.id sugeneruotas Store metode id
+        // dataset.id // į elementa prideda atributą "data-id"
+        // dataset.id = colorItem.id // atributui priskiria reikšmę data-id="213246848"
+        deleteButton.dataset.id = colorItem.id;
+
+        deleteButton.addEventListener('click', e => {
+
+            // e eventas
+            // e.target iš evento gautas paspaustas mygtuko elementas
+            // e.target.dataset kreipimasis į elemento "data-" atributus
+            // e.target.dataset.id kreipomasis į atributą "data-id"
+
+            const id = parseInt(e.target.dataset.id);
+            Destroy(id);
+        });
+
+
+        //*** EDIT */
+
+
+
+
+
+
         colorSq.style.backgroundColor = colorItem.color + '70'; // + permatomumas
         colorSq.style.borderColor = colorItem.color;
 
@@ -73,7 +101,18 @@ const Store = data => {
         id, // ====> supaprastintintas id: id
         color: data
     }
-    LIST.push(dataToStore);
+    LIST.unshift(dataToStore);
+    writeLocalStorage();
+    render();
+}
+
+/*
+Destroy vykdo "daikto" pašalinimą iš saugyklos
+Turi gauti "daikto" identifikatorių
+Turi pašalinti daiktą su nurodytu identifikatorium
+*/
+const Destroy = id => {
+    LIST = LIST.filter(color => color.id != id); // išmetam iš sąrašo kvadratuką su norodytu id
     writeLocalStorage();
     render();
 }
