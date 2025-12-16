@@ -76,9 +76,20 @@ const render = _ => {
 
         //*** EDIT */
 
+        const editInput = rowHtml.querySelector('[data-edit-color-input]');
+        const editButton = rowHtml.querySelector('[data-edit-color-button]');
 
+        editInput.value = colorItem.color; // senų duomenų perrašymas į edit formą
+        editButton.dataset.id = colorItem.id;
 
+        editButton.addEventListener('click', e => {
 
+            const id = parseInt(e.target.dataset.id);
+            const color = editInput.value;
+
+            Update(id, color);
+
+        });
 
 
         colorSq.style.backgroundColor = colorItem.color + '70'; // + permatomumas
@@ -116,6 +127,18 @@ const Destroy = id => {
     writeLocalStorage();
     render();
 }
+
+/*
+Update vykdo redaguoto "daikto" saugojimą saugykloje
+Turi gauti "daikto" identifikatorių ir daikto naujas savybes
+Turi persaugoti daiktą su nurodytu identifikatorium ir naujom savybėm
+*/
+
+const Update = (id, data) => {
+    LIST = LIST.map(item => item.id == id ? {...item, color: data} : item);
+    writeLocalStorage();
+    render();
+};
 
 
 
