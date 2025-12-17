@@ -24,23 +24,14 @@ const init = _ => {
 
     createButton.addEventListener('click', _ => {
         const color = createInput.value;
-        Store(color);
+        const dataToStore = {
+            color
+        }
+        Store(dataToStore);
     });
 }
 
-const readLocalStorage = _ => {
-    let data = localStorage.getItem(KEY);
-    if (null === data) {
-        LIST = [];
-    } else {
-        LIST = JSON.parse(data);
-    }
-}
 
-const writeLocalStorage = _ => {
-    let data = JSON.stringify(LIST);
-    localStorage.setItem(KEY, data);
-}
 
 const render = _ => {
     const listBin = document.querySelector('[data-colors-list]');
@@ -84,7 +75,11 @@ const render = _ => {
             const id = e.target.dataset.id;
             const color = editInput.value;
 
-            Update(id, color);
+            const dataToUpdate = {
+                color
+            }
+
+            Update(id, dataToUpdate);
 
         });
 
@@ -97,6 +92,22 @@ const render = _ => {
     });
 }
 
+//* CRUD CODE **//
+
+const readLocalStorage = _ => {
+    let data = localStorage.getItem(KEY);
+    if (null === data) {
+        LIST = [];
+    } else {
+        LIST = JSON.parse(data);
+    }
+}
+
+const writeLocalStorage = _ => {
+    let data = JSON.stringify(LIST);
+    localStorage.setItem(KEY, data);
+}
+
 
 /*
 Store vykdo naujo "daikto" įrašymą į saugyklą
@@ -105,9 +116,9 @@ Turi "daiktui" priskirt ID ir įrašyti į saugyklą
 */
 const Store = data => {
     const id = uuidv4();
-    dataToStore = {
-        id, // ====> supaprastintintas id: id
-        color: data
+    const dataToStore = {
+        ...data,
+        id
     }
     LIST.unshift(dataToStore);
     writeLocalStorage();
@@ -120,7 +131,7 @@ Turi gauti "daikto" identifikatorių
 Turi pašalinti daiktą su nurodytu identifikatorium
 */
 const Destroy = id => {
-    LIST = LIST.filter(color => color.id != id); // išmetam iš sąrašo kvadratuką su norodytu id
+    LIST = LIST.filter(item => item.id != id);
     writeLocalStorage();
     render();
 }
@@ -132,11 +143,9 @@ Turi persaugoti daiktą su nurodytu identifikatorium ir naujom savybėm
 */
 
 const Update = (id, data) => {
-    LIST = LIST.map(item => item.id == id ? {...item, color: data} : item);
+    LIST = LIST.map(item => item.id == id ? {...item, ...data, id} : item);
     writeLocalStorage();
     render();
 };
-
-
 
 init();

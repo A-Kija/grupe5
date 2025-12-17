@@ -210,20 +210,11 @@ var init = function init(_) {
   var createButton = document.querySelector('[data-create-color-button]');
   createButton.addEventListener('click', function (_) {
     var color = createInput.value;
-    Store(color);
+    var dataToStore = {
+      color: color
+    };
+    Store(dataToStore);
   });
-};
-var readLocalStorage = function readLocalStorage(_) {
-  var data = localStorage.getItem(KEY);
-  if (null === data) {
-    LIST = [];
-  } else {
-    LIST = JSON.parse(data);
-  }
-};
-var writeLocalStorage = function writeLocalStorage(_) {
-  var data = JSON.stringify(LIST);
-  localStorage.setItem(KEY, data);
 };
 var render = function render(_) {
   var listBin = document.querySelector('[data-colors-list]');
@@ -260,12 +251,30 @@ var render = function render(_) {
     editButton.addEventListener('click', function (e) {
       var id = e.target.dataset.id;
       var color = editInput.value;
-      Update(id, color);
+      var dataToUpdate = {
+        color: color
+      };
+      Update(id, dataToUpdate);
     });
     colorSq.style.backgroundColor = colorItem.color + '70'; // + permatomumas
     colorSq.style.borderColor = colorItem.color;
     listBin.appendChild(rowHtml);
   });
+};
+
+//* CRUD CODE **//
+
+var readLocalStorage = function readLocalStorage(_) {
+  var data = localStorage.getItem(KEY);
+  if (null === data) {
+    LIST = [];
+  } else {
+    LIST = JSON.parse(data);
+  }
+};
+var writeLocalStorage = function writeLocalStorage(_) {
+  var data = JSON.stringify(LIST);
+  localStorage.setItem(KEY, data);
 };
 
 /*
@@ -275,11 +284,9 @@ Turi "daiktui" priskirt ID ir įrašyti į saugyklą
 */
 var Store = function Store(data) {
   var id = (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  dataToStore = {
-    id: id,
-    // ====> supaprastintintas id: id
-    color: data
-  };
+  var dataToStore = _objectSpread(_objectSpread({}, data), {}, {
+    id: id
+  });
   LIST.unshift(dataToStore);
   writeLocalStorage();
   render();
@@ -291,9 +298,9 @@ Turi gauti "daikto" identifikatorių
 Turi pašalinti daiktą su nurodytu identifikatorium
 */
 var Destroy = function Destroy(id) {
-  LIST = LIST.filter(function (color) {
-    return color.id != id;
-  }); // išmetam iš sąrašo kvadratuką su norodytu id
+  LIST = LIST.filter(function (item) {
+    return item.id != id;
+  });
   writeLocalStorage();
   render();
 };
@@ -306,8 +313,8 @@ Turi persaugoti daiktą su nurodytu identifikatorium ir naujom savybėm
 
 var Update = function Update(id, data) {
   LIST = LIST.map(function (item) {
-    return item.id == id ? _objectSpread(_objectSpread({}, item), {}, {
-      color: data
+    return item.id == id ? _objectSpread(_objectSpread(_objectSpread({}, item), data), {}, {
+      id: id
     }) : item;
   });
   writeLocalStorage();
