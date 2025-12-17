@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="app.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <title>CRUD</title>
+</head>
+<body>
+
+    <h1>Colors CRUD</h1>
+
+    <fieldset class="create">
+        <legend>Create</legend>
+        <input type="color" data-create-color-input>
+        <button data-create-color-button>[C]reate</button>
+    </fieldset>
+
+    <section class="list" data-colors-list>
+
+    </section>
+
+    <template data-list-template>
+        <div class="list-row" data-list-row>
+            <div class="color-sq" data-color-sq></div>
+
+            <input type="color" data-edit-color-input>
+            <button data-edit-color-button>[E]dit</button>
+
+            <button class="delete-button" data-delete-sq>X</button>
+        </div>
+    </template>
+
+    
+</body>
+</html>
