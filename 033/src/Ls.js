@@ -2,19 +2,24 @@ import { v4 as uuidv4 } from 'uuid';
 
 class Ls {
 
+    constructor(key) {
+        this.key = key; // prisimenam key
+        this.readLocalStorage(); // paleidžiam metodą readLocalStorage
+    }
+
 
     readLocalStorage = _ => {
-        let data = localStorage.getItem(KEY);
+        let data = localStorage.getItem(this.key);
         if (null === data) {
-            LIST = [];
+            this.list = [];
         } else {
-            LIST = JSON.parse(data);
+            this.list = JSON.parse(data);
         }
     }
 
     writeLocalStorage = _ => {
-        let data = JSON.stringify(LIST);
-        localStorage.setItem(KEY, data);
+        let data = JSON.stringify(this.list);
+        localStorage.setItem(this.key, data);
     }
 
 
@@ -29,9 +34,8 @@ class Ls {
             ...data,
             id
         }
-        LIST.unshift(dataToStore);
-        writeLocalStorage();
-        render();
+        this.list.unshift(dataToStore); // pakeičia listą
+        this.writeLocalStorage();
     }
 
     /*
@@ -40,9 +44,8 @@ class Ls {
     Turi pašalinti daiktą su nurodytu identifikatorium
     */
     Destroy = id => {
-        LIST = LIST.filter(item => item.id != id);
-        writeLocalStorage();
-        render();
+        this.list = this.list.filter(item => item.id != id);
+        this.writeLocalStorage();
     }
 
     /*
@@ -52,8 +55,9 @@ class Ls {
     */
 
     Update = (id, data) => {
-        LIST = LIST.map(item => item.id == id ? { ...item, ...data, id } : item);
-        writeLocalStorage();
-        render();
+        this.list = this.list.map(item => item.id == id ? { ...item, ...data, id } : item);
+        this.writeLocalStorage();
     };
 }
+
+export default Ls; // išeksportuojam

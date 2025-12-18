@@ -1,24 +1,16 @@
-
+import Ls from './Ls';
 
 console.log('CRUD');
 
-/*
-Naujo pridėjimas
-
-Create - vaizdas
-Store - veiksmas
-
-*/
 
 
 
-let LIST;
-const KEY = 'myFancyColorsList';
+let LS; // klasės Ls objektas (bus)
 
 
 const init = _ => {
-    readLocalStorage();
-    render();
+    LS = new Ls('myFancyColorsList'); // LS.list jau atsiranda kvadratukai su spalvom
+    render(LS.list);
     const createInput = document.querySelector('[data-create-color-input]');
     const createButton = document.querySelector('[data-create-color-button]');
 
@@ -27,17 +19,18 @@ const init = _ => {
         const dataToStore = {
             color
         }
-        Store(dataToStore);
+        LS.Store(dataToStore);
+        render(LS.list); // LS.list jau pakeistas klasėje
     });
 }
 
 
 
-const render = _ => {
+const render = list => {
     const listBin = document.querySelector('[data-colors-list]');
     const listRowTemplate = document.querySelector('[data-list-template]');
     listBin.innerHTML = '';
-    LIST.forEach(colorItem => {
+    list.forEach(colorItem => {
         const rowHtml = listRowTemplate.content.cloneNode(true);
         const colorSq = rowHtml.querySelector('[data-color-sq]');
 
@@ -58,7 +51,8 @@ const render = _ => {
             // e.target.dataset.id kreipomasis į atributą "data-id"
 
             const id = e.target.dataset.id;
-            Destroy(id);
+            LS.Destroy(id);
+            render(LS.list);
         });
 
 
@@ -79,8 +73,8 @@ const render = _ => {
                 color
             }
 
-            Update(id, dataToUpdate);
-
+            LS.Update(id, dataToUpdate);
+            render(LS.list);
         });
 
 
