@@ -71,3 +71,62 @@
 .fancy-btn-orange:hover {
     background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
 }
+
+/* Super Duper Fancy Colorful H1 */
+h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    text-align: center;
+    background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #00d2d3);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 4s ease infinite, textGlow 2s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+    letter-spacing: 3px;
+    margin: 40px 0;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #ff6b6b, #feca57, #48dbfb, transparent);
+    border-radius: 2px;
+    animation: underlineGlow 3s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes textGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.6));
+    }
+    50% {
+        filter: drop-shadow(0 0 20px rgba(72, 219, 251, 0.8));
+    }
+}
+
+@keyframes underlineGlow {
+    0%, 100% {
+        opacity: 0.6;
+        transform: translateX(-50%) scaleX(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) scaleX(1.1);
+    }
+}
