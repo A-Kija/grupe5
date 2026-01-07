@@ -108,9 +108,64 @@ app.get('/didesnis/:skaicius1/:skaicius2', (req, res) => {
 
 // --------------------
 
+/*
+// fikcinis URL su parametrais
+https://duckduckgo.com/karv%C4%97/chromentp/web
+
+Query (užklausos) parametrai URL'e
+pvz:
+https://duckduckgo.com/?q=karv%C4%97&t=chromentp&ia=web
+
+parametrai yra URL dalis po klaustuko ?
+parametras susideda iš kintamojo vardo ir reikšmės
+vardas rašomas prieš lygybės ženklą =
+reikšmė rašoma po lygybės ženklo =
+jei yra keli parametrai, jie atskiriami & ženklu
+
+*/
 
 
 
+// duomenų perdavimas su query (užklausos) parametrais
+// 
+app.get('/spalvotas-dydis', (req, res) => {
+    // paimame query kintamuosius iš req objekto
+
+    // req.query - objektas, kuriame yra visi query kintamieji
+    // req.query.color - paimame color kintamojo reikšmę
+    const spalva = req.query.color; 
+    const dydis = req.query.size;
+    const mazis = req.query.small;
+    res.send(`Spalva yra ${spalva}, dydis yra ${dydis}, mažis yra ${mazis}`);
+});
+
+
+
+
+// Padaryti kalkuliatorių skaičiuotuvą sumai per URL skaičiuoti
+// url su query  => turi parašyti "5 + 10 = 15"
+
+app.get('/query-suma', (req, res) => {
+    const skaicius1 = parseFloat(req.query.skaicius1);
+    const skaicius2 = parseFloat(req.query.skaicius2);
+    const suma = skaicius1 + skaicius2;
+    res.send(`${skaicius1} + ${skaicius2} = ${suma}`);
+});
+
+// http://localhost/query-suma?skaicius1=5&skaicius2=10
+
+
+// Padaryti kalkuliatorių skaičiuotuvą sumai per URL skaičiuoti
+// url pirmas skaičius kaip parametras antras kaip query kintamasis  => turi parašyti "5 + 10 = 15"
+
+app.get('/mix-suma/:skaicius1', (req, res) => {
+    const skaicius1 = parseFloat(req.params.skaicius1);
+    const skaicius2 = parseFloat(req.query.skaicius2);
+    const suma = skaicius1 + skaicius2;
+    res.send(`${skaicius1} + ${skaicius2} = ${suma}`);
+});
+
+// http://localhost/mix-suma/5?skaicius2=10
 
 
 
