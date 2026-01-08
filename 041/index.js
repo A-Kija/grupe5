@@ -1,7 +1,16 @@
 const express = require('express');
 const fs = require('fs'); // failų sistemos modulis-biblioteka
+const bodyParser = require('body-parser');
 const app = express();
 const port = 80;
+
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()); // for parsing application/json
+
+app.use(express.static('public'));
+
+
 
 
 // Dalis Router
@@ -167,6 +176,22 @@ app.get('/mix-suma/:skaicius1', (req, res) => {
 
 // http://localhost/mix-suma/5?skaicius2=10
 
+
+app.get('/search', (req, res) => {
+    const query = req.query.q;
+    const another = req.query.another;
+    res.send(`You searched for: ${query}. Another input: ${another}`);
+});
+
+// Padaryti kalkuliatorių skaičiuotuvą sumai su forma GET metodu skaičiuoti
+// Formoje suvedame du skaičius
+// atsidaro langas kuriame turi parašyti "5 + 10 = 15"
+
+app.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    res.send(`Username: ${username}, Password: ${password}`);
+});
 
 
 
