@@ -230,3 +230,12 @@ input::placeholder,
 textarea::placeholder {
     color: #999;
 }
+
+#success-message {
+    text-align: center;
+    padding: 2rem;
+    background: #e6ffe6;
+    border: 2px solid #4a7c2c;
+    border-radius: 10px;
+    color: #2d5016;
+}

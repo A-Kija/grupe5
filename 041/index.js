@@ -190,7 +190,12 @@ app.get('/search', (req, res) => {
 app.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    res.send(`Username: ${username}, Password: ${password}`);
+    // res.send(`Username: ${username}, Password: ${password}`);
+    res.redirect('/ok');
+});
+
+app.get('/ok', (req, res) => {
+    res.send('Login successful!');
 });
 
 
