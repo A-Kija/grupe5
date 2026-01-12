@@ -9,12 +9,46 @@
     <script src="app.js" defer></script>
 </head>
 
+<!-- 
+    Prekės pavadinimas;
+    Kaina;
+    Kiekis sandėlyje;
+    Trumpas aprašymas;
+-->
+
 <body>
 
     <div class="container">
         <div class="row">
             <div class="col-4">
-                CREATE
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h2>Add new product</h2>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Create Product</h5>
+                        <p class="card-text">Here you can add a new product to the inventory.</p>
+                        <form data-create-form>
+                            <div class="mb-3">
+                                <label for="productName" class="form-label">Product Name</label>
+                                <input type="text" class="form-control" id="productName" name="productName"">
+                            </div>
+                            <div class="mb-3">
+                                <label for="productPrice" class="form-label">Price</label>
+                                <input type="number" class="form-control" id="productPrice" name="productPrice" step="0.01">
+                            </div>
+                            <div class="mb-3">
+                                <label for="productQuantity" class="form-label">Quantity in Stock</label>
+                                <input type="number" class="form-control" id="productQuantity" name="productQuantity" step="1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="productDescription" class="form-label">Short Description</label>
+                                <textarea class="form-control" id="productDescription" name="productDescription" rows="3"></textarea>
+                            </div>
+                            <button data-create-btn type="button" class="btn btn-primary">Add Product</button>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="col-8">
                 LIST
