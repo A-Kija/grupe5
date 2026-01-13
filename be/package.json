@@ -2,7 +2,6 @@
   "name": "be",
   "version": "1.0.0",
   "main": "index.js",
-  "type":"commonjs",
   "scripts": {
     "start": "node --watch index.js"
   },
@@ -13,6 +12,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.2.1",
-    "uuid": "^13.0.0"
+    "uuid": "^11.0.0"
   }
 }

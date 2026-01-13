@@ -22,7 +22,8 @@ const initCreateForm = _ => {
     const createBtn = form.querySelector('[data-create-btn]');
 
     // Pridedam mygtuko paspaudimo eventą
-    createBtn.addEventListener('click', _ => {
+    createBtn.addEventListener('click', e => {
+        e.preventDefault(); // sustabdom formos siuntimą
         // Surandam visus inputus su name atributu
         const allInputs = form.querySelectorAll('[name]');
         // Sukuriam tuščią objektą prekės duomenims laikyti
@@ -35,17 +36,21 @@ const initCreateForm = _ => {
             itemData[name] = value; // itemData['pavadinimas'] = 'Tokia tai prekė'
         });
 
-        axios.post(serverUrl, itemData)
-            .then(res => {
-                console.log('Prekė sukurta sėkmingai:', res.data);
+        axios.post(serverUrl, itemData) // dirba serverio kodas
+            .then(res => { // sėkmingas atsakymas iš serverio ir toliau dirba kliento kodas
+                // res pilnas atsakymo duomenų objektas
+                // res.data - atsakymo duomenys iš serverio
+                console.log('Prekė sukurta sėkmingai:', res);
                 // Išvalom formą
                 form.reset();
             })
-            .catch(err => {
+            .catch(err => { // klaidingas atsakymas iš serverio ir toliau dirba kliento kodas
                 console.error('Klaida kuriant prekę:', err);
             });
     });
 }
+
+/////////
 
 
 

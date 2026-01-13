@@ -20,17 +20,30 @@ app.use(bodyParser.json());
 app.post('/items', (req, res) => {
     // Gaunam naujos prekės duomenis iš užklausos kūno
     const newItem = req.body;
-    // const id = uuidv4(); // sugeneruojam unikalų ID
+    const id = uuidv4(); // sugeneruojam unikalų ID
 
     newItem.id = id;
 
-    console.log('Gauti naujos prekės duomenys:', newItem);
 
     // Perskaitom esamus duomenis iš failo (sinchroniškai iš products.json)
-    // const productsData = fs.readFileSync('products.json', 'utf-8');
-    // const products = JSON.parse(productsData);
+    
+    // skaitom failą kaip tekstą
+    const productsData = fs.readFileSync('products.json', 'utf-8');
+    // konvertuojam tekstą į JavaScript masyvą 
+    const products = JSON.parse(productsData);
+    // Pridedam naują prekę į esamų prekių masyvą
+    products.push(newItem);
+    // Išsaugom atnaujintą prekių masyvą atgal į products.json failą
+    fs.writeFileSync('products.json', JSON.stringify(products, null, 2));
 
-    res.send({ message: 'Nauja prekė sukurta sėkmingai', item: newItem });
+    // siunčiame objektą, kuris yra verčiamas į JSON formato tekstą
+    res.send({
+        message: 'New item created successfully',
+        status: 'success',
+        item: newItem 
+    }); 
+
+    
 
 });
 

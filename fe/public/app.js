@@ -7242,7 +7242,8 @@ var initCreateForm = function initCreateForm(_) {
   var createBtn = form.querySelector('[data-create-btn]');
 
   // Pridedam mygtuko paspaudimo eventą
-  createBtn.addEventListener('click', function (_) {
+  createBtn.addEventListener('click', function (e) {
+    e.preventDefault(); // sustabdom formos siuntimą
     // Surandam visus inputus su name atributu
     var allInputs = form.querySelectorAll('[name]');
     // Sukuriam tuščią objektą prekės duomenims laikyti
@@ -7254,15 +7255,23 @@ var initCreateForm = function initCreateForm(_) {
       var value = input.value; // input reikšmė
       itemData[name] = value; // itemData['pavadinimas'] = 'Tokia tai prekė'
     });
-    axios__WEBPACK_IMPORTED_MODULE_0__["default"].post(serverUrl, itemData).then(function (res) {
-      console.log('Prekė sukurta sėkmingai:', res.data);
+    axios__WEBPACK_IMPORTED_MODULE_0__["default"].post(serverUrl, itemData) // dirba serverio kodas
+    .then(function (res) {
+      // sėkmingas atsakymas iš serverio ir toliau dirba kliento kodas
+      // res pilnas atsakymo duomenų objektas
+      // res.data - atsakymo duomenys iš serverio
+      console.log('Prekė sukurta sėkmingai:', res);
       // Išvalom formą
       form.reset();
     })["catch"](function (err) {
+      // klaidingas atsakymas iš serverio ir toliau dirba kliento kodas
       console.error('Klaida kuriant prekę:', err);
     });
   });
 };
+
+/////////
+
 initApp();
 
 /***/ },

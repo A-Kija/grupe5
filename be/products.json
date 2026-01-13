@@ -1,0 +1,30 @@
+[
+  {
+    "productName": "Varškė",
+    "productPrice": "1.52",
+    "productQuantity": "600",
+    "productDescription": "Skani liesa varškė iš Kalnų ožių pieno",
+    "id": "0f816f36-84df-40f9-b2be-dda5baa32eee"
+  },
+  {
+    "productName": "Kefyras",
+    "productPrice": "5.63",
+    "productQuantity": "320",
+    "productDescription": "Pieno produktas su sidabro dulkėm virškinimui pagerinti",
+    "id": "4ed7a506-1888-443a-a29d-4883b582aa73"
+  },
+  {
+    "productName": "Sviestas",
+    "productPrice": "2.23",
+    "productQuantity": "350",
+    "productDescription": "Geltonas gabalas iš neaiškios medžiagos",
+    "id": "fcec8f67-d71a-470f-97c2-fa1a04cac850"
+  },
+  {
+    "productName": "Grietinė",
+    "productPrice": "4.45",
+    "productQuantity": "330",
+    "productDescription": "Balta skysta, tamsoje šiek tiek šviečia",
+    "id": "28815e7b-584f-4a00-8420-1a82b93127a9"
+  }
+]
