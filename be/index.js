@@ -42,11 +42,27 @@ app.post('/items', (req, res) => {
         status: 'success',
         item: newItem 
     }); 
-
-    
-
 });
 
+
+// Visų prekių gavimas
+app.get('/items', (req, res) => {
+    // skaitom failą kaip tekstą
+    const productsData = fs.readFileSync('products.json', 'utf-8');
+    // konvertuojam tekstą į JavaScript masyvą 
+    const products = JSON.parse(productsData);
+    // siunčiame objektą, kuris yra verčiamas į JSON formato tekstą
+    res.send({
+        message: 'Items retrieved successfully',
+        status: 'success',
+        items: products 
+    }); 
+});
+
+
+
+
+// Serverio paleidimas
 app.listen(port, () => {
     console.log(`Viskas gerai. CRUD dirba ant ${port} porto`);
 });

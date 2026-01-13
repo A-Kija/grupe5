@@ -11982,3 +11982,7 @@ textarea.form-control-lg {
 body {
   background-color: lightgray;
 }
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
