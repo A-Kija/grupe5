@@ -1,0 +1,16 @@
+{
+  "name": "047",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^5.2.1"
+  }
+}
