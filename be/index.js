@@ -25,6 +25,7 @@ app.post('/items', (req, res) => {
     newItem.id = id;
 
 
+
     // Perskaitom esamus duomenis iš failo (sinchroniškai iš products.json)
     
     // skaitom failą kaip tekstą
@@ -38,7 +39,8 @@ app.post('/items', (req, res) => {
 
     // siunčiame objektą, kuris yra verčiamas į JSON formato tekstą
     res.send({
-        message: 'New item created successfully',
+        message: `Item ${newItem.productName} created successfully`,
+        messageType: 'success',
         status: 'success',
         item: newItem 
     }); 
@@ -66,11 +68,13 @@ app.delete('/items/:id', (req, res) => { // turim url su parametru id kuris yra 
         const productsData = fs.readFileSync('products.json', 'utf-8');// skaitom failą kaip tekstą
         let products = JSON.parse(productsData); // konvertuojam tekstą į JavaScript masyvą 
         // filtruojam prekes, paliekam tik tas kurios neturi trynimo id
+        const deletedProduct = products.find(product => product.id === id);
         products = products.filter(product => product.id !== id);
         // išsaugom atnaujintą prekių masyvą atgal į products.json failą
         fs.writeFileSync('products.json', JSON.stringify(products, null, 2));
         res.send({
-            message: 'Item deleted successfully',
+            message: `Item ${deletedProduct.productName} deleted successfully`,
+            messageType: 'info',
             status: 'success'
         });
     // }, 3000); // dirbtinis vėlinimas 3 sekundėms
@@ -94,10 +98,12 @@ app.put('/items/:id', (req, res) => {
         }
         return product; // grąžinam nepakeistą prekę
     });
+    const updatedProductName = updatedItem.productName;
     // išsaugom atnaujintą prekių masyvą atgal į products.json failą
     fs.writeFileSync('products.json', JSON.stringify(products, null, 2));
     res.send({
-        message: 'Item updated successfully',
+        message: `Item ${updatedProductName} updated successfully`,
+        messageType: 'success',
         status: 'success'
     });
 });

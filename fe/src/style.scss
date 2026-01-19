@@ -8,3 +8,17 @@ body {
     // display: block;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+.messages-bin {
+    position: fixed;
+    top: 33px;
+    right: 33px;
+    z-index: 1050; // aukštesnis už bootstrap modal
+    width: auto;
+    max-width: 300px;
+
+    .alert {
+        user-select: none;
+    }
+}
+

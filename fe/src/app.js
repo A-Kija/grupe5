@@ -52,7 +52,8 @@ const initCreateForm = _ => {
             .then(res => { // sėkmingas atsakymas iš serverio ir toliau dirba kliento kodas
                 // res pilnas atsakymo duomenų objektas
                 // res.data - atsakymo duomenys iš serverio
-                console.log('Prekė sukurta sėkmingai:', res);
+                console.log(res.data.message);
+                showAlert(res.data.message, res.data.messageType);
                 // Išvalom formą
                 form.reset();
                 // Atnaujinam prekių sąrašą
@@ -130,7 +131,7 @@ const initDeleteModal = product => {
         // užklausos pvz.: http://localhost/items/15 perdavimas per parametrą
         axios.delete(`${serverUrl}/${product.id}`) // užklausos metodas DELETE
             .then(res => {
-                console.log('Prekė ištrinta sėkmingai:', res);
+                showAlert(res.data.message, res.data.messageType);
                 deleteModal.style.display = 'none'; // uždarom modalą
                 // nuimam išklausytoją, kad paspaudus kitą kartą neveiktų sena funkcija
                 destroyBtn.removeEventListener('click', destroyFunction);
@@ -159,6 +160,7 @@ const initEditModal = product => {
 
     const updateBtn = editModal.querySelector('[data-update-btn]'); // surandam save mygtuką
 
+
     const updateFunction = e => {
         e.preventDefault();
         // čia bus prekės atnaujinimo logika
@@ -173,7 +175,7 @@ const initEditModal = product => {
         // updatedData yra body dalis
         axios.put(`${serverUrl}/${product.id}`, updatedData) // užklausos metodas PUT
             .then(res => {
-                console.log('Prekė atnaujinta sėkmingai:', res);
+                showAlert(res.data.message, res.data.messageType);
                 editModal.style.display = 'none'; // uždarom modalą
                 // nuimam išklausytoją, kad paspaudus kitą kartą neveiktų sena funkcija
                 updateBtn.removeEventListener('click', updateFunction);
@@ -189,6 +191,32 @@ const initEditModal = product => {
 
 
 
+}
+
+
+const showAlert = (message, type = 'success') => {
+    // surandame vietą kur dėti pranešimus
+    const bin = document.querySelector('[data-messages-bin]');
+    // kuriam naują alert elementą
+    const alert = document.createElement('div');
+    // pridedam klase pagal Bootstrap alert sistemą
+    alert.className = `alert alert-${type}`;
+    // pridedam role atributą
+    alert.setAttribute('role', 'alert');
+    // pridedam tekstą
+    alert.textContent = message;
+    // įdedam alert į bin. Dedame viršuje
+    bin.insertBefore(alert, bin.firstChild);
+
+    // po 10 sekundžių pašalinam alert
+    const timeoutId = setTimeout(_ => {
+        alert.remove();
+    }, 10000);
+
+    alert.addEventListener('click', _ => {
+        clearTimeout(timeoutId); // sustabdom timeout kad nebandytų pašalinti jau pašalinto elemento
+        alert.remove();
+    });
 }
 
 

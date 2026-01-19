@@ -11986,3 +11986,17 @@ body {
 .modal {
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+.messages-bin {
+  position: fixed;
+  top: 33px;
+  right: 33px;
+  z-index: 1050;
+  width: auto;
+  max-width: 300px;
+}
+.messages-bin .alert {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}

@@ -7273,7 +7273,8 @@ var initCreateForm = function initCreateForm(_) {
       // sėkmingas atsakymas iš serverio ir toliau dirba kliento kodas
       // res pilnas atsakymo duomenų objektas
       // res.data - atsakymo duomenys iš serverio
-      console.log('Prekė sukurta sėkmingai:', res);
+      console.log(res.data.message);
+      showAlert(res.data.message, res.data.messageType);
       // Išvalom formą
       form.reset();
       // Atnaujinam prekių sąrašą
@@ -7342,7 +7343,7 @@ var initDeleteModal = function initDeleteModal(product) {
     // užklausos pvz.: http://localhost/items/15 perdavimas per parametrą
     axios__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]("".concat(serverUrl, "/").concat(product.id)) // užklausos metodas DELETE
     .then(function (res) {
-      console.log('Prekė ištrinta sėkmingai:', res);
+      showAlert(res.data.message, res.data.messageType);
       deleteModal.style.display = 'none'; // uždarom modalą
       // nuimam išklausytoją, kad paspaudus kitą kartą neveiktų sena funkcija
       destroyBtn.removeEventListener('click', _destroyFunction);
@@ -7382,7 +7383,7 @@ var initEditModal = function initEditModal(product) {
     // updatedData yra body dalis
     axios__WEBPACK_IMPORTED_MODULE_0__["default"].put("".concat(serverUrl, "/").concat(product.id), updatedData) // užklausos metodas PUT
     .then(function (res) {
-      console.log('Prekė atnaujinta sėkmingai:', res);
+      showAlert(res.data.message, res.data.messageType);
       editModal.style.display = 'none'; // uždarom modalą
       // nuimam išklausytoją, kad paspaudus kitą kartą neveiktų sena funkcija
       updateBtn.removeEventListener('click', _updateFunction);
@@ -7393,6 +7394,30 @@ var initEditModal = function initEditModal(product) {
     });
   };
   updateBtn.addEventListener('click', _updateFunction);
+};
+var showAlert = function showAlert(message) {
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+  // surandame vietą kur dėti pranešimus
+  var bin = document.querySelector('[data-messages-bin]');
+  // kuriam naują alert elementą
+  var alert = document.createElement('div');
+  // pridedam klase pagal Bootstrap alert sistemą
+  alert.className = "alert alert-".concat(type);
+  // pridedam role atributą
+  alert.setAttribute('role', 'alert');
+  // pridedam tekstą
+  alert.textContent = message;
+  // įdedam alert į bin. Dedame viršuje
+  bin.insertBefore(alert, bin.firstChild);
+
+  // po 10 sekundžių pašalinam alert
+  var timeoutId = setTimeout(function (_) {
+    alert.remove();
+  }, 10000);
+  alert.addEventListener('click', function (_) {
+    clearTimeout(timeoutId); // sustabdom timeout kad nebandytų pašalinti jau pašalinto elemento
+    alert.remove();
+  });
 };
 
 // Va čia paleidžiam pradžios funkciją
