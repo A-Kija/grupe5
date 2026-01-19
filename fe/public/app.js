@@ -7238,16 +7238,6 @@ var initApp = function initApp(_) {
   console.log('App started');
   initCreateForm();
   initProductsList();
-
-  // Modalų uždarymo mygtukų logika
-  var allCloseBtns = document.querySelectorAll('[data-bs-dismiss="modal"]');
-  allCloseBtns.forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      var modal = btn.closest('.modal'); // surandam artimiausią tėvinį .modal elementą
-      modal.style.display = 'none';
-    });
-  });
 };
 var initCreateForm = function initCreateForm(_) {
   // Randam formą ir mygtuką
@@ -7279,9 +7269,26 @@ var initCreateForm = function initCreateForm(_) {
       form.reset();
       // Atnaujinam prekių sąrašą
       initProductsList();
+      // nuimam klaidų žymes iš inputų
+      allInputs.forEach(function (input) {
+        input.classList.remove('is-invalid'); // bootstrap klasė
+      });
     })["catch"](function (err) {
       // klaidingas atsakymas iš serverio ir toliau dirba kliento kodas
-      console.error('Klaida kuriant prekę:', err);
+      // išvedam klaidos pranešimą
+      showAlert(err.response.data.message, err.response.data.messageType);
+      if (err.response.data.errorFields) {
+        // pažymim klaidingus laukus
+        var errorFields = err.response.data.errorFields;
+        allInputs.forEach(function (input) {
+          var name = input.getAttribute('name');
+          if (errorFields.includes(name)) {
+            input.classList.add('is-invalid'); // bootstrap klasė
+          } else {
+            input.classList.remove('is-invalid');
+          }
+        });
+      }
     });
   });
 };
@@ -7329,8 +7336,6 @@ var initProductsList = function initProductsList(_) {
 };
 var initDeleteModal = function initDeleteModal(product) {
   var deleteModal = document.querySelector('[data-delete-modal]');
-  // čia bus modalo atidarymo logika
-
   // Randame elementą, kuriame bus rodomas prekės pavadinimas
   var productNameSpan = deleteModal.querySelector('[data-delete-product-name]');
   // Įdedame prekės pavadinimą į modalą
@@ -7343,6 +7348,7 @@ var initDeleteModal = function initDeleteModal(product) {
     // užklausos pvz.: http://localhost/items/15 perdavimas per parametrą
     axios__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]("".concat(serverUrl, "/").concat(product.id)) // užklausos metodas DELETE
     .then(function (res) {
+      // visi 200-299 statusai
       showAlert(res.data.message, res.data.messageType);
       deleteModal.style.display = 'none'; // uždarom modalą
       // nuimam išklausytoją, kad paspaudus kitą kartą neveiktų sena funkcija
@@ -7350,10 +7356,23 @@ var initDeleteModal = function initDeleteModal(product) {
       // Papildomai reikėtų atnaujinti prekių sąrašą, kad ištrinta prekė nebebūtų matoma
       initProductsList();
     })["catch"](function (err) {
-      console.error('Klaida trinant prekę:', err);
+      // visi kiti statusai
+      // išvedam klaidos pranešimą
+      showAlert(err.response.data.message, err.response.data.messageType);
+      deleteModal.style.display = 'none'; // uždarom modalą
+      destroyBtn.removeEventListener('click', _destroyFunction);
     });
   };
-
+  // Čia bus modalo uždarymo logika
+  var closeBtns = deleteModal.querySelectorAll('[data-bs-dismiss="modal"]');
+  closeBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      deleteModal.style.display = 'none';
+      // nuimam išklausytoją, kad paspaudus kitą kartą neveiktų sena funkcija
+      destroyBtn.removeEventListener('click', _destroyFunction);
+    });
+  });
   // Pridedam mygtuko paspaudimo eventą
   destroyBtn.addEventListener('click', _destroyFunction);
 };
@@ -7368,7 +7387,6 @@ var initEditModal = function initEditModal(product) {
   form.productQuantity.value = product.productQuantity;
   form.productDescription.value = product.productDescription;
   var updateBtn = editModal.querySelector('[data-update-btn]'); // surandam save mygtuką
-
   var _updateFunction = function updateFunction(e) {
     e.preventDefault();
     // čia bus prekės atnaujinimo logika
@@ -7378,7 +7396,6 @@ var initEditModal = function initEditModal(product) {
       productQuantity: form.productQuantity.value,
       productDescription: form.productDescription.value
     };
-
     // užklausos pvz.: http://localhost/items/15 perdavimas per parametrą
     // updatedData yra body dalis
     axios__WEBPACK_IMPORTED_MODULE_0__["default"].put("".concat(serverUrl, "/").concat(product.id), updatedData) // užklausos metodas PUT
@@ -7390,9 +7407,23 @@ var initEditModal = function initEditModal(product) {
       // Papildomai reikėtų atnaujinti prekių sąrašą, kad matytųsi atnaujinti duomenys
       initProductsList();
     })["catch"](function (err) {
-      console.error('Klaida atnaujinant prekę:', err);
+      // išvedam klaidos pranešimą
+      showAlert(err.response.data.message, err.response.data.messageType);
+      editModal.style.display = 'none'; // uždarom modalą
+      updateBtn.removeEventListener('click', _updateFunction);
     });
   };
+  // čia bus modalo uždarymo logika
+  var closeBtns = editModal.querySelectorAll('[data-bs-dismiss="modal"]');
+  closeBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      editModal.style.display = 'none';
+      // nuimam išklausytoją, kad paspaudus kitą kartą neveiktų sena funkcija
+      updateBtn.removeEventListener('click', _updateFunction);
+    });
+  });
+  // Pridedam mygtuko paspaudimo eventą
   updateBtn.addEventListener('click', _updateFunction);
 };
 var showAlert = function showAlert(message) {

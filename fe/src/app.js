@@ -15,20 +15,11 @@ const initApp = _ => {
     console.log('App started');
     initCreateForm();
     initProductsList();
-
-    // Modalų uždarymo mygtukų logika
-    const allCloseBtns = document.querySelectorAll('[data-bs-dismiss="modal"]');
-    allCloseBtns.forEach(btn => {
-        btn.addEventListener('click', e => {
-            e.preventDefault();
-            const modal = btn.closest('.modal'); // surandam artimiausią tėvinį .modal elementą
-            modal.style.display = 'none';
-        });
-    });
 }
 
 
 const initCreateForm = _ => {
+
     // Randam formą ir mygtuką
     const form = document.querySelector('[data-create-form]');
     const createBtn = form.querySelector('[data-create-btn]');
@@ -58,11 +49,29 @@ const initCreateForm = _ => {
                 form.reset();
                 // Atnaujinam prekių sąrašą
                 initProductsList();
+                // nuimam klaidų žymes iš inputų
+                allInputs.forEach(input => {
+                    input.classList.remove('is-invalid'); // bootstrap klasė
+                });
             })
             .catch(err => { // klaidingas atsakymas iš serverio ir toliau dirba kliento kodas
-                console.error('Klaida kuriant prekę:', err);
+                // išvedam klaidos pranešimą
+                showAlert(err.response.data.message, err.response.data.messageType);
+                if (err.response.data.errorFields) {
+                    // pažymim klaidingus laukus
+                    const errorFields = err.response.data.errorFields;
+                    allInputs.forEach(input => {
+                        const name = input.getAttribute('name');
+                        if (errorFields.includes(name)) {
+                            input.classList.add('is-invalid'); // bootstrap klasė
+                        } else {
+                            input.classList.remove('is-invalid');
+                        }
+                    });
+                }
             });
     });
+
 }
 
 const initProductsList = _ => {
@@ -114,23 +123,18 @@ const initProductsList = _ => {
 
 const initDeleteModal = product => {
     const deleteModal = document.querySelector('[data-delete-modal]');
-    // čia bus modalo atidarymo logika
-
     // Randame elementą, kuriame bus rodomas prekės pavadinimas
     const productNameSpan = deleteModal.querySelector('[data-delete-product-name]');
     // Įdedame prekės pavadinimą į modalą
     productNameSpan.textContent = product.productName;
     deleteModal.style.display = 'block';
-
     const destroyBtn = deleteModal.querySelector('[data-destroy-btn]');
-
     const destroyFunction = e => {
-
         // čia bus prekės ištrynimo logika
         e.preventDefault();
         // užklausos pvz.: http://localhost/items/15 perdavimas per parametrą
         axios.delete(`${serverUrl}/${product.id}`) // užklausos metodas DELETE
-            .then(res => {
+            .then(res => { // visi 200-299 statusai
                 showAlert(res.data.message, res.data.messageType);
                 deleteModal.style.display = 'none'; // uždarom modalą
                 // nuimam išklausytoją, kad paspaudus kitą kartą neveiktų sena funkcija
@@ -138,11 +142,23 @@ const initDeleteModal = product => {
                 // Papildomai reikėtų atnaujinti prekių sąrašą, kad ištrinta prekė nebebūtų matoma
                 initProductsList();
             })
-            .catch(err => {
-                console.error('Klaida trinant prekę:', err);
+            .catch(err => { // visi kiti statusai
+                // išvedam klaidos pranešimą
+                showAlert(err.response.data.message, err.response.data.messageType);
+                deleteModal.style.display = 'none'; // uždarom modalą
+                destroyBtn.removeEventListener('click', destroyFunction);
             });
     }
-
+    // Čia bus modalo uždarymo logika
+    const closeBtns = deleteModal.querySelectorAll('[data-bs-dismiss="modal"]');
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            deleteModal.style.display = 'none';
+            // nuimam išklausytoją, kad paspaudus kitą kartą neveiktų sena funkcija
+            destroyBtn.removeEventListener('click', destroyFunction);
+        });
+    });
     // Pridedam mygtuko paspaudimo eventą
     destroyBtn.addEventListener('click', destroyFunction);
 }
@@ -157,10 +173,7 @@ const initEditModal = product => {
     form.productPrice.value = product.productPrice; // paėmimas per name atributą supaprastintai
     form.productQuantity.value = product.productQuantity;
     form.productDescription.value = product.productDescription;
-
     const updateBtn = editModal.querySelector('[data-update-btn]'); // surandam save mygtuką
-
-
     const updateFunction = e => {
         e.preventDefault();
         // čia bus prekės atnaujinimo logika
@@ -170,7 +183,6 @@ const initEditModal = product => {
             productQuantity: form.productQuantity.value,
             productDescription: form.productDescription.value
         };
-
         // užklausos pvz.: http://localhost/items/15 perdavimas per parametrą
         // updatedData yra body dalis
         axios.put(`${serverUrl}/${product.id}`, updatedData) // užklausos metodas PUT
@@ -183,14 +195,24 @@ const initEditModal = product => {
                 initProductsList();
             })
             .catch(err => {
-                console.error('Klaida atnaujinant prekę:', err);
+                // išvedam klaidos pranešimą
+                showAlert(err.response.data.message, err.response.data.messageType);
+                editModal.style.display = 'none'; // uždarom modalą
+                updateBtn.removeEventListener('click', updateFunction);
             });
     }
-
+    // čia bus modalo uždarymo logika
+    const closeBtns = editModal.querySelectorAll('[data-bs-dismiss="modal"]');
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            editModal.style.display = 'none';
+            // nuimam išklausytoją, kad paspaudus kitą kartą neveiktų sena funkcija
+            updateBtn.removeEventListener('click', updateFunction);
+        });
+    });
+    // Pridedam mygtuko paspaudimo eventą
     updateBtn.addEventListener('click', updateFunction);
-
-
-
 }
 
 
