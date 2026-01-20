@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 // Naujos prekės kūrimas
 app.post('/items', (req, res) => {
 
-    // setTimeout(_ => {
+    setTimeout(_ => {
 
     // Gaunam naujos prekės duomenis iš užklausos kūno
     const newItem = req.body;
@@ -68,7 +68,7 @@ app.post('/items', (req, res) => {
         item: newItem 
     }); 
 
-    // }, 2000); // dirbtinis vėlinimas 2 sekundėms
+    }, 5000); // dirbtinis vėlinimas 5 sekundėms
 });
 
 

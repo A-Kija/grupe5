@@ -7239,6 +7239,9 @@ var initApp = function initApp(_) {
   initCreateForm();
   initProductsList();
 };
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////CREATE FORM
+//////////////////////////////////////////////////////////////////
 var initCreateForm = function initCreateForm(_) {
   // Randam formą ir mygtuką
   var form = document.querySelector('[data-create-form]');
@@ -7258,12 +7261,31 @@ var initCreateForm = function initCreateForm(_) {
       var value = input.value; // input reikšmė
       itemData[name] = value; // itemData['pavadinimas'] = 'Tokia tai prekė'
     });
+
+    // Validacija (pavyzdys, galima išplėsti)
+    if (!itemData.productName || !itemData.productPrice) {
+      var errorFields = [];
+      if (!itemData.productName) errorFields.push('productName');
+      if (!itemData.productPrice) errorFields.push('productPrice');
+      showAlert('Product name and price are required', 'danger');
+      // pažymim klaidingus laukus
+      allInputs.forEach(function (input) {
+        var name = input.getAttribute('name');
+        if (errorFields.includes(name)) {
+          input.classList.add('is-invalid'); // bootstrap klasė
+        } else {
+          input.classList.remove('is-invalid');
+        }
+      });
+      return;
+    }
+    loader();
     axios__WEBPACK_IMPORTED_MODULE_0__["default"].post(serverUrl, itemData) // dirba serverio kodas
     .then(function (res) {
       // sėkmingas atsakymas iš serverio ir toliau dirba kliento kodas
       // res pilnas atsakymo duomenų objektas
       // res.data - atsakymo duomenys iš serverio
-      console.log(res.data.message);
+      loader(false);
       showAlert(res.data.message, res.data.messageType);
       // Išvalom formą
       form.reset();
@@ -7276,13 +7298,13 @@ var initCreateForm = function initCreateForm(_) {
     })["catch"](function (err) {
       // klaidingas atsakymas iš serverio ir toliau dirba kliento kodas
       // išvedam klaidos pranešimą
-      showAlert(err.response.data.message, err.response.data.messageType);
+      loader(false);
       if (err.response.data.errorFields) {
         // pažymim klaidingus laukus
-        var errorFields = err.response.data.errorFields;
+        var _errorFields = err.response.data.errorFields;
         allInputs.forEach(function (input) {
           var name = input.getAttribute('name');
-          if (errorFields.includes(name)) {
+          if (_errorFields.includes(name)) {
             input.classList.add('is-invalid'); // bootstrap klasė
           } else {
             input.classList.remove('is-invalid');
@@ -7292,6 +7314,10 @@ var initCreateForm = function initCreateForm(_) {
     });
   });
 };
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////PRODUCTS LIST
+//////////////////////////////////////////////////////////////////
 var initProductsList = function initProductsList(_) {
   console.log('Kraunam prekių sąrašą iš serverio...');
   // Surandam prekių sąrašo vietą ir šabloną
@@ -7312,7 +7338,7 @@ var initProductsList = function initProductsList(_) {
       // productEl.querySelector('[data-name]').textContent = product.productName;
 
       var kurDetiVarda = productEl.querySelector('[data-name]');
-      kurDetiVarda.textContent = product.productName;
+      kurDetiVarda.innerHTML = product.productName;
       productEl.querySelector('[data-price]').innerText = "Kaina: ".concat(product.productPrice, " EUR");
       productEl.querySelector('[data-quantity]').textContent = "Kiekis sand\u0117lyje: ".concat(product.productQuantity);
       productEl.querySelector('[data-description]').textContent = product.productDescription;
@@ -7334,6 +7360,10 @@ var initProductsList = function initProductsList(_) {
     console.error('Klaida gaunant prekes:', err);
   });
 };
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////DELETE MODAL
+//////////////////////////////////////////////////////////////////
 var initDeleteModal = function initDeleteModal(product) {
   var deleteModal = document.querySelector('[data-delete-modal]');
   // Randame elementą, kuriame bus rodomas prekės pavadinimas
@@ -7376,6 +7406,10 @@ var initDeleteModal = function initDeleteModal(product) {
   // Pridedam mygtuko paspaudimo eventą
   destroyBtn.addEventListener('click', _destroyFunction);
 };
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////EDIT MODAL
+//////////////////////////////////////////////////////////////////
 var initEditModal = function initEditModal(product) {
   var editModal = document.querySelector('[data-edit-modal]');
   // čia bus modalo atidarymo logika
@@ -7426,6 +7460,8 @@ var initEditModal = function initEditModal(product) {
   // Pridedam mygtuko paspaudimo eventą
   updateBtn.addEventListener('click', _updateFunction);
 };
+
+// showAlert funkcija kuri parodo pranešimą ekrane
 var showAlert = function showAlert(message) {
   var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
   // surandame vietą kur dėti pranešimus
@@ -7437,7 +7473,7 @@ var showAlert = function showAlert(message) {
   // pridedam role atributą
   alert.setAttribute('role', 'alert');
   // pridedam tekstą
-  alert.textContent = message;
+  alert.innerHTML = message;
   // įdedam alert į bin. Dedame viršuje
   bin.insertBefore(alert, bin.firstChild);
 
@@ -7449,6 +7485,11 @@ var showAlert = function showAlert(message) {
     clearTimeout(timeoutId); // sustabdom timeout kad nebandytų pašalinti jau pašalinto elemento
     alert.remove();
   });
+};
+var loader = function loader() {
+  var show = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  var loader = document.querySelector('[data-loader]');
+  loader.style.display = show ? 'flex' : 'none';
 };
 
 // Va čia paleidžiam pradžios funkciją

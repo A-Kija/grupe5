@@ -16,8 +16,9 @@ const initApp = _ => {
     initCreateForm();
     initProductsList();
 }
-
-
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////CREATE FORM
+//////////////////////////////////////////////////////////////////
 const initCreateForm = _ => {
 
     // Randam formą ir mygtuką
@@ -39,11 +40,30 @@ const initCreateForm = _ => {
             itemData[name] = value; // itemData['pavadinimas'] = 'Tokia tai prekė'
         });
 
+        // Validacija (pavyzdys, galima išplėsti)
+        if (!itemData.productName || !itemData.productPrice) {
+            const errorFields = [];
+            if (!itemData.productName) errorFields.push('productName');
+            if (!itemData.productPrice) errorFields.push('productPrice');
+            showAlert('Product name and price are required', 'danger');
+            // pažymim klaidingus laukus
+            allInputs.forEach(input => {
+                const name = input.getAttribute('name');
+                if (errorFields.includes(name)) {
+                    input.classList.add('is-invalid'); // bootstrap klasė
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            return;
+        }
+
+        loader();
         axios.post(serverUrl, itemData) // dirba serverio kodas
             .then(res => { // sėkmingas atsakymas iš serverio ir toliau dirba kliento kodas
                 // res pilnas atsakymo duomenų objektas
                 // res.data - atsakymo duomenys iš serverio
-                console.log(res.data.message);
+                loader(false);
                 showAlert(res.data.message, res.data.messageType);
                 // Išvalom formą
                 form.reset();
@@ -56,7 +76,7 @@ const initCreateForm = _ => {
             })
             .catch(err => { // klaidingas atsakymas iš serverio ir toliau dirba kliento kodas
                 // išvedam klaidos pranešimą
-                showAlert(err.response.data.message, err.response.data.messageType);
+                loader(false);
                 if (err.response.data.errorFields) {
                     // pažymim klaidingus laukus
                     const errorFields = err.response.data.errorFields;
@@ -74,6 +94,10 @@ const initCreateForm = _ => {
 
 }
 
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////PRODUCTS LIST
+//////////////////////////////////////////////////////////////////
 const initProductsList = _ => {
     console.log('Kraunam prekių sąrašą iš serverio...');
     // Surandam prekių sąrašo vietą ir šabloną
@@ -94,7 +118,7 @@ const initProductsList = _ => {
                 // productEl.querySelector('[data-name]').textContent = product.productName;
 
                 const kurDetiVarda = productEl.querySelector('[data-name]');
-                kurDetiVarda.textContent = product.productName;
+                kurDetiVarda.innerHTML = product.productName;
 
                 productEl.querySelector('[data-price]').innerText = `Kaina: ${product.productPrice} EUR`;
                 productEl.querySelector('[data-quantity]').textContent = `Kiekis sandėlyje: ${product.productQuantity}`;
@@ -121,6 +145,9 @@ const initProductsList = _ => {
         });
 }
 
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////DELETE MODAL
+//////////////////////////////////////////////////////////////////
 const initDeleteModal = product => {
     const deleteModal = document.querySelector('[data-delete-modal]');
     // Randame elementą, kuriame bus rodomas prekės pavadinimas
@@ -163,6 +190,10 @@ const initDeleteModal = product => {
     destroyBtn.addEventListener('click', destroyFunction);
 }
 
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////EDIT MODAL
+//////////////////////////////////////////////////////////////////
 const initEditModal = product => {
     const editModal = document.querySelector('[data-edit-modal]');
     // čia bus modalo atidarymo logika
@@ -215,7 +246,7 @@ const initEditModal = product => {
     updateBtn.addEventListener('click', updateFunction);
 }
 
-
+// showAlert funkcija kuri parodo pranešimą ekrane
 const showAlert = (message, type = 'success') => {
     // surandame vietą kur dėti pranešimus
     const bin = document.querySelector('[data-messages-bin]');
@@ -226,7 +257,7 @@ const showAlert = (message, type = 'success') => {
     // pridedam role atributą
     alert.setAttribute('role', 'alert');
     // pridedam tekstą
-    alert.textContent = message;
+    alert.innerHTML = message;
     // įdedam alert į bin. Dedame viršuje
     bin.insertBefore(alert, bin.firstChild);
 
@@ -240,6 +271,11 @@ const showAlert = (message, type = 'success') => {
         alert.remove();
     });
 }
+
+const loader = (show = true) => {
+    const loader = document.querySelector('[data-loader]');
+    loader.style.display = show ? 'flex' : 'none';
+};
 
 
 
