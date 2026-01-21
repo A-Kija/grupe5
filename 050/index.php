@@ -135,3 +135,77 @@ echo '<br>';
 echo PHP_OS; // operacinė sistema
 
 
+echo '<br>';// KINTAMUJU TIPU KEITIMAS
+$kintamasisTipas = '1234'; // string
+echo gettype($kintamasisTipas); // isveda kintamojo tipa
+echo '<br>';
+
+var_dump('1' == '01'); // true, nes lygina reiksmes
+// kaip lygina '1' == '01'
+// 1. abu stringai paverčiami į integer tipus '1' -> 1 , '01' -> 1 '01' yra aštuntojo skaičiavimo sistemos skaičius, bet paverčiamas į dešimtainę
+// 2. lyginamos reiksmes 1 == 1
+echo '<br>';
+var_dump('1' === '01'); // false, nes lygina ir tipus
+// kaip lygina '1' === '01'
+// 1. abu stringai lieka stringais
+
+// php galima nustatyti strict_types, kad būtų griežtai lyginami tipai
+// tai daroma failo viršuje, prieš <?php žymę
+// declare(strict_types=1);
+
+/*
+Jonas ir Petras žaidžiai šaškėm. Petras surenka taškų kiekį nuo 10 iki 20, Jonas surenka taškų kiekį nuo 5 iki 25. Išvesti žaidėjų vardus su taškų kiekiu ir
+ “Laimėjo: laimėtojo vardas”;
+Taškų kiekį generuokite funkcija rand();
+*/
+
+$petrasTaskai = rand(10, 20);
+$jonasTaskai = rand(5, 25);
+echo '<br><hr><br>';
+echo "Petras surinko: {$petrasTaskai} taškų. <br>";
+echo "Jonas surinko: $jonasTaskai taškų. <br>";
+if ($petrasTaskai > $jonasTaskai) {
+    echo 'Laimėjo: Petras';
+} elseif ($jonasTaskai > $petrasTaskai) {
+    echo 'Laimėjo: Jonas';
+} else {
+    echo 'Lygiosios!';
+}
+
+echo '<br><hr><br>';
+
+//Priskiriamoji sąlyga
+$vienas = 1;
+$rezultatas = 1 == $vienas ? 'Yes' : 'No'; // $rezultatas  yra 'Yes'
+echo $rezultatas;
+echo '<br>';
+$rezultatas = 3 == $vienas ? 'Yes' : 'No'; // $rezultatas  yra 'No'
+echo $rezultatas;
+echo '<br><hr><br>';
+
+
+
+//Priskiriamoji sąlyga su priskiramająja salyga viduje
+$kintamasis = 5;
+$rezultatas = $kintamasis < 3 ? 'Mažiau nei 3' : ($kintamasis > 7 ? 'Daugiau nei 7' : 'Nuo 3 iki 7'); // $rezultatas yra 'Nuo 3 iki 7'
+// skliausteliai viduje yra būtini
+echo $rezultatas;
+echo '<br><hr><br>';
+
+//Priskiriamoji sąlyga su null coalescing operatoriumi
+// $kintamasis222 = null;
+$rezultatas = $kintamasis222 ?? 'Kintamasis yra null arba nenurodytas'; // $rezultatas yra 'Kintamasis yra null'
+echo $rezultatas;
+echo '<br><hr><br>';
+
+// priskyrimas su match operatoriumi (PHP 8.0+)
+
+$kintamasisMatch = 22;
+$rezultatasMatch = match ($kintamasisMatch) {
+    1 => 'Viena',
+    2 => 'Du',
+    3 => 'Trys',
+    default => 'Kitas skaičius',
+};
+echo $rezultatasMatch;
+echo '<br><hr><br>';
