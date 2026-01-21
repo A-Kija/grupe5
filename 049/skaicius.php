@@ -7,4 +7,9 @@ $stringas = 'LABAS, BEBRAI';
 
 echo $stringas;
 
+/*
+
+
+*/
+
 
