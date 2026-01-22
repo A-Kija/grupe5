@@ -1,11 +1,13 @@
 <?php
+$title = 'Style & Elegance Home';
+$header = true;
 include __DIR__ . '/parts/top.php';
 ?>
     
     <section class="hero">
         <div class="hero-content">
             <h2 data-top-color>Discover Your Style</h2>
-            <p>Explore the latest fashion trends and timeless classics</p>
+            <p data-top-phrase></p>
             <button data-top-color-button class="btn">Explore Now</button>
         </div>
     </section>
