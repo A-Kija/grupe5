@@ -79,3 +79,95 @@ $masyvas4[14] = 107;
 $masyvas4[] = 222; // push į masyvą, indeksas max indeksas + 1;
 
 print_r($masyvas4);
+
+$zmogus = [
+    'vardas' => 'Jeronimas',
+    'auto' => 'Kadilakas',
+    'amzius' => 55
+];
+
+print_r($zmogus);
+
+// reikia sukurti masyvą, kuriame būtų 10 reikšmių 0, 2, 4, 6... 18.
+
+
+$mas024 = [];
+
+// for ($i = 0; $i < 10; $i++) {
+//     $mas024[$i * 2] = $i * 2;
+// }
+
+for ($i = 0; $i < 20; $i+=2) {
+    $mas024[] = $i;
+}
+
+print_r($mas024);
+
+
+echo '<br>FOREACH<hr><br>';
+
+foreach($zmogus as $reiksme) {
+
+    echo $reiksme . '<br>';
+}
+
+echo '<br>FOREACH<hr><br>';
+
+foreach($zmogus as $indeksas => $reiksme) {
+
+    echo $indeksas . ': ' . $reiksme . '<br>';
+}
+
+$masyvas123 = range('a', 'z'); // padaro masyvą
+
+print_r($masyvas123);
+
+foreach(range(1, 5) as $i) {
+    echo $i . '<br>';
+}
+
+// pagal reikšme ir pagal nuorodą
+
+echo '<br>--------------<hr><br>';
+
+$m1 = [1, 2, 3];
+$m2 = $m1; // perdavimas pagal reikšmę
+
+$m1[] = 4;
+
+print_r($m1);
+print_r($m2);
+
+echo '<br>--------------<hr><br>';
+
+$m3 = [1, 2, 3];
+$m4 =& $m3; // perdavimas pagal nuorodą
+
+$m3[] = 4;
+
+print_r($m3);
+print_r($m4);
+
+
+$colors = ['Red', 'Green', 'Blue', 'Yellow'];
+
+foreach($colors as &$color){} // $color pagal nuorodą (by reference)
+
+// reikėtų nepamiršt panaudotą nebereikalingą nuorodą "užmušt"
+
+unset($color); // unset panaikina nuorodą
+
+foreach($colors as $color){ // $color pagal reikšmę (by value)
+    echo $color . '<br>';
+}
+
+$fun = function($el) {
+    return $el . '***';
+};
+
+$naujasZmogus = array_map($fun, $zmogus);
+
+
+echo '<br>--------------<hr><br>';
+
+print_r($naujasZmogus);
