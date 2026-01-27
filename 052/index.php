@@ -171,3 +171,4 @@ $naujasZmogus = array_map($fun, $zmogus);
 echo '<br>--------------<hr><br>';
 
 print_r($naujasZmogus);
+
