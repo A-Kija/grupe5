@@ -17,7 +17,7 @@ $stotele2 = new Stotele('Užkandinė "Bebro Kebabas"');
 
 
 
-
+$stotele1->paslaptis = 'Barsukas';
 
 
 echo '<pre>';
@@ -30,11 +30,13 @@ echo '<br>';
 
 unset($stotele2);
 
-echo $stotele1->vardas;
+echo $stotele1->paslaptis; // privatus per __get metodą
+
+
 
 echo '<br>';
 
-$stotele1->rodytiAutobusus();
+var_dump($stotele1->auto);
 
 echo 'Viskai gerai';
 
