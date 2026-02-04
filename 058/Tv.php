@@ -5,8 +5,15 @@ class Tv {
     private $ekranoDydis;
     private $gamintojas;
     private $savininkas;
-    private $kanalai = [];
+    private static $kanalai = []; // statinis
     private $kanalas;
+    
+    public static function pridetiKanalus($kanalai)
+    {
+        self::$kanalai = $kanalai; // pasiekiame statinę savybę
+        // self yra klasės vardo atitikmuo
+    }
+
     
     public function __construct($gamintojas, $ekranoDydis)
     {
@@ -14,10 +21,9 @@ class Tv {
         $this->ekranoDydis = $ekranoDydis;
     }
 
-    public function parduoti($kam, $kanalai)
+    public function parduoti($kam)
     {
         $this->savininkas = $kam;
-        $this->kanalai = $kanalai;
     }
 
     public function perjungti($kanalas)
@@ -27,11 +33,16 @@ class Tv {
 
     public function kaZiuri()
     {
-        if (!isset($this->kanalai[$this->kanalas])) {
+        if (!isset(self::$kanalai[$this->kanalas])) {
             echo "<h3> {$this->savininkas} per televizorių mato baltą triukšmą </h3>";
         } else {
-            echo "<h3> {$this->savininkas} per televizorių mato {$this->kanalai[$this->kanalas]} </h3>";
+            echo "<h3> {$this->savininkas} per televizorių mato " . self::$kanalai[$this->kanalas] . '</h3>';
         }
     }
+
+    // public function keistiKanalus($kanalai)
+    // {
+    //     $this->kanalai = $kanalai;
+    // }
 
 }
