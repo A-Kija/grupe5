@@ -2,7 +2,9 @@
 
 interface Fauna {
 
-    function basukai();
+    const MU = 'MŪŪŪŪŪŪŪ...';
+
+    function barsukai();
 
     function kiaunes();
 

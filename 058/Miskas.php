@@ -1,6 +1,6 @@
 <?php
 
-abstract class Miskas {
+abstract class Miskas implements Flora {
 
     public $plotas = 500;
     public $pavadinimas = 'Juodas Miškas';
@@ -17,6 +17,11 @@ abstract class Miskas {
     {
         echo '<h3>' . self::$kas . '</h3>'; // statinis klasės be šeimos
         echo '<h3>' . static::$kas . '</h3>'; // statinis klasės su galimu perrašymu iš vaikinės klasės
+    }
+
+    public function samanos()
+    {
+        
     }
 
     abstract public function grybai(string $A);

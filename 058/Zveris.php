@@ -19,6 +19,32 @@ class Zveris extends Miskas implements Fauna, Fauna2 {
     public function grybai($va)
     {
         echo '<h2>GrYYYYYYbai...</h2>';
+        echo self::MU;
+    }
+
+    public function barsukai()
+    {
+
+    }
+
+    public function kiaunes()
+    {
+        
+    }
+
+    public function barsukai2()
+    {
+
+    }
+
+    public function kiaunes2()
+    {
+        
+    }
+
+    public function musmires()
+    {
+
     }
 
 }

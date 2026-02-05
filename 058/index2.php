@@ -1,5 +1,9 @@
 <?php
 
+require __DIR__ . '/Fauna.php';
+require __DIR__ . '/Fauna2.php';
+require __DIR__ . '/Flora.php';
+
 require __DIR__ . '/Miskas.php';
 require __DIR__ . '/Zveris.php';
 
