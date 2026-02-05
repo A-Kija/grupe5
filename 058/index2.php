@@ -3,19 +3,19 @@
 require __DIR__ . '/Miskas.php';
 require __DIR__ . '/Zveris.php';
 
-echo '<br>';
+// echo '<br>';
 
-echo Miskas::$kas;
+// echo Miskas::$kas;
 
-echo '<br>';
+// echo '<br>';
 
-echo Zveris::$kas;
+// echo Zveris::$kas;
 
 
 $vienas = new Zveris('Barsukas');
 $antras = new Zveris('Barsukas Nr. 2');
 
-$antras->valio();
+$antras->valio2();
 
 
 echo '<pre>';
