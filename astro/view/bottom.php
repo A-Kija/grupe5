@@ -2,6 +2,6 @@
     <span>Stellar Notes - private astronomical log</span>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="<?= URL ?>app.js"></script>
 </body>
 </html>

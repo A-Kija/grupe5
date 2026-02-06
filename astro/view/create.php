@@ -3,7 +3,7 @@
       <h1>Create a New Note</h1>
       <p class="note-lead">Log your observations with date, title, and a full session summary.</p>
 
-      <form class="note-form">
+      <form class="note-form" method="post" action="<?= URL ?>store">
         <label class="field">
           <span>Date</span>
           <input type="date" name="date" required />

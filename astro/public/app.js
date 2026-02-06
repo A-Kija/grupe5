@@ -24,7 +24,7 @@ window.addEventListener("load", () => {
 const noteForm = document.querySelector(".note-form");
 if (noteForm) {
   noteForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     noteForm.classList.add("submitted");
     const button = noteForm.querySelector("button[type='submit']");
     if (button) {
