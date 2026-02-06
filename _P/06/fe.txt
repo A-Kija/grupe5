@@ -1,0 +1,11 @@
+Make 3 simple html pages for personal astronomical notes with the following content:
+1. Home Page (index.html): list of personal notes with date and title
+2. Note Page (note1.html): note date, title, and content
+3. Create page (create.html): form to create a new note with fields for date, title, and content
+
+Use bastc HTML structure separated css file and a simple JavaScript for same basic DOM animations.
+Make only front-end code, no back-end or database integration.
+Fill index.html with sample notes and note1.html with a sample note content. 
+
+Pages design should be modern and realated to astronomy, using a dark theme without childish elements.
+Use a simple and clean layout with a focus on readability. Do not use any external libraries or frameworks, only plain HTML, CSS, and JavaScript.
