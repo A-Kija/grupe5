@@ -20,7 +20,7 @@
         <article class="note-card" data-animate="fade-up">
           <div class="note-meta"><?= $note['date'] ?></div>
           <h3><?= $note['title'] ?></h3>
-          <p><?= $note['content'] ?></p>
+            <p><?= implode(' ', array_slice(explode(' ', $note['content']), 0, 17)) ?></p>
           <a class="note-link" href="<?= URL ?>note/<?= $note['id'] ?>">Read note</a>
         </article>
 
