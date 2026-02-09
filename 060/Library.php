@@ -1,9 +1,16 @@
 <?php
 
+// Šita biblioteka yra ne mūsų sukurta, todėl nekišam prie jos nagų
+
 class Library
 {
-    private array $books = [];
+    protected array $books = []; // ne viešas, bet extendintoj klasėj yra matoma
 
+    public function kas()
+    {
+        echo '<h1>Library</h1>';
+    }
+    
     public function addBook(string $title, string $author, string $isbn): void
     {
         $this->books[] = [
