@@ -1,0 +1,19 @@
+{
+    "name": "arvyd/059",
+    "autoload": {
+        "psr-4": {
+            "AI\\GPT5\\": "biblioteka/",
+            "Ka\\Ziureti\\Dabar\\": "",
+            "Mano\\Ir\\Tik\\Mano\\": ""
+        }
+    },
+    "authors": [
+        {
+            "name": "A-Kija",
+            "email": "42836152+A-Kija@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "ramsey/uuid": "^4.9"
+    }
+}
