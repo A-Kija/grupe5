@@ -14,6 +14,54 @@ $options = [
 $pdo = new PDO($dsn, $user, $pass, $options);
 
 
+// jeigu a tai tada yra action
+if (isset($_GET['a'])) {
+
+    if ('plant' == $_GET['a']) {
+
+        $title = $_POST['title'] ? $_POST['title'] : 'Nežinomas';
+        $height = $_POST['height'] ? $_POST['height'] : 0;
+        $type = $_POST['type'] ? $_POST['type'] : 'palmė';
+
+        // INSERT INTO table_name (column1, column2, column3, ...)
+        // VALUES (value1, value2, value3, ...);
+
+        $sql = "
+            INSERT INTO trees (title, height, type)
+            VALUES ('$title', $height, '$type')
+        ";
+
+        $pdo->query($sql);
+
+    }
+
+    if ('cut' == $_GET['a']) {
+
+        $id = $_POST['id'] ? $_POST['id'] : 0;
+
+        // DELETE FROM table_name WHERE condition;
+
+        $sql = "
+            DELETE FROM trees
+            WHERE id = $id
+        ";
+
+        /*
+            DELETE FROM trees
+            WHERE id = 888 OR 1
+        */
+
+        $pdo->query($sql);
+
+    }
+
+
+    header('Location: http://localhost/grupe5/061/');
+    die;
+}
+
+
+
 /*
 SELECT column1, column2, ...
 FROM table_name;
@@ -22,7 +70,7 @@ FROM table_name;
 $sql = "
     SELECT id, title, height, type
     FROM trees
-    WHERE type <> 'lapuotis' 
+    -- WHERE type <> 'lapuotis' 
     -- ORDER BY type, height DESC
 ";
 
@@ -51,6 +99,8 @@ $stmt = $pdo->query($sql);
             justify-content: center;
             align-items: center;
             padding: 20px;
+            flex-direction: column;
+            gap: 30px;
         }
         
         .container {
@@ -98,9 +148,50 @@ $stmt = $pdo->query($sql);
         tbody tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+
+        form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        input, select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #556cd6;
+        }
+        button.red {
+            background-color: #e74c3c;
+        }
+        button.red:hover {
+            background-color: #c0392b;
+        }
+        button.green {
+            background-color: #2ecc71;
+        }
+        button.green:hover {
+            background-color: #27ae60;
+        }
     </style>
 </head>
 <body>
+
+
+
     <div class="container">
         <h1>🌳 Tree Database</h1>
         <table>
@@ -123,6 +214,25 @@ $stmt = $pdo->query($sql);
                 <?php endwhile ?>
             </tbody>
         </table>
+    </div>
+
+    <div class="container">
+        <form method="POST" action="?a=plant">
+            <input type="text" name="title" placeholder="Tree Title">
+            <input type="number" name="height" placeholder="Height (m)" step="0.01">
+            <select name="type">
+                <option value="">Select Type</option>
+                <option value="lapuotis">Lapuotis</option>
+                <option value="spygliuotis">Spygliuotis</option>
+                <option value="palmė">Palmė</option>
+            </select>
+            <button type="submit">Plant Tree</button>
+        </form>
+
+        <form method="POST" action="?a=cut">
+            <input type="text" name="id" placeholder="Tree ID">
+            <button type="submit" class="red">Cut Tree</button>
+        </form>
     </div>
 </body>
 </html>
