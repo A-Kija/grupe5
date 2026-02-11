@@ -26,12 +26,19 @@ if (isset($_GET['a'])) {
         // INSERT INTO table_name (column1, column2, column3, ...)
         // VALUES (value1, value2, value3, ...);
 
+        // $sql = "
+        //     INSERT INTO trees (title, height, type)
+        //     VALUES ('$title', $height, '$type')
+        // ";
+
+        // $pdo->query($sql);
+
         $sql = "
             INSERT INTO trees (title, height, type)
-            VALUES ('$title', $height, '$type')
+            VALUES (?, ?, ?)
         ";
-
-        $pdo->query($sql);
+        $stmt = $pdo->prepare($sql); // vykdom paruošimą
+        $stmt->execute([$title, $height, $type]); // vykdom užklausą
 
     }
 
@@ -41,17 +48,52 @@ if (isset($_GET['a'])) {
 
         // DELETE FROM table_name WHERE condition;
 
+        // $sql = "
+        //     DELETE FROM trees
+        //     WHERE id = $id
+        // ";
+
         $sql = "
             DELETE FROM trees
-            WHERE id = $id
-        ";
+            WHERE id = ?
+        "; // paruošta užklausa
+
+        $stmt = $pdo->prepare($sql); // vykdom paruošimą
+        $stmt->execute([$id]); // vykdom užklausą
 
         /*
             DELETE FROM trees
             WHERE id = 888 OR 1
         */
 
-        $pdo->query($sql);
+        // $pdo->query($sql);
+
+    }
+
+    if ('grow' == $_GET['a']) {
+
+        $id = $_POST['id'] ? $_POST['id'] : 0;
+        $height = $_POST['height'] ? $_POST['height'] : 0;
+
+        // UPDATE table_name
+        // SET column1 = value1, column2 = value2, ...
+        // WHERE condition;
+
+        // $sql = "
+        //     UPDATE trees
+        //     SET height = ?, title = CONCAT(title, ' paaugęs')
+        //     WHERE id = ?
+        // ";
+
+        
+        $sql = "
+            UPDATE trees
+            SET height = ?
+            WHERE id = ?
+        ";
+
+        $stmt = $pdo->prepare($sql); // vykdom paruošimą
+        $stmt->execute([$height, $id]); // vykdom užklausą
 
     }
 
@@ -66,6 +108,19 @@ if (isset($_GET['a'])) {
 SELECT column1, column2, ...
 FROM table_name;
 */
+
+
+
+$sql = "
+    SELECT COUNT(*) AS counter, AVG(height) AS average
+    FROM trees
+    WHERE type = 'lapuotis'
+";
+
+$stmt = $pdo->query($sql);
+$data = $stmt->fetch();
+
+
 
 $sql = "
     SELECT id, title, height, type
@@ -194,6 +249,8 @@ $stmt = $pdo->query($sql);
 
     <div class="container">
         <h1>🌳 Tree Database</h1>
+        <h3>Count: <?= $data['counter'] ?></h3>
+        <h3>Average: <?= $data['average'] ?> m</h3>
         <table>
             <thead>
                 <tr>
@@ -232,6 +289,12 @@ $stmt = $pdo->query($sql);
         <form method="POST" action="?a=cut">
             <input type="text" name="id" placeholder="Tree ID">
             <button type="submit" class="red">Cut Tree</button>
+        </form>
+
+        <form method="POST" action="?a=grow">
+            <input type="text" name="id" placeholder="Tree ID">
+            <input type="number" name="height" placeholder="Height (m)" step="0.01">
+            <button type="submit" class="green">Grow Tree</button>
         </form>
     </div>
 </body>
