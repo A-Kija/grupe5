@@ -118,53 +118,14 @@ $pdo = new PDO($dsn, $user, $pass, $options);
         button.green:hover {
             background-color: #27ae60;
         }
+        ul { 
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
-
-    <?php
-
-        // SELECT column_name(s)
-        // FROM table1
-        // INNER JOIN table2
-        // ON table1.column_name = table2.column_name;
-
-        $sql = "
-        SELECT clients.id, client_name, phones.id AS pid, phone_number
-        FROM clients
-        INNER JOIN phones
-        ON clients.id = phones.client_id
-        ";
-
-        $stmt = $pdo->query($sql);
-
-    ?>
-
-
-
-    <div class="container">
-        <h1>👥 Clients Database INNER</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Client ID</th>
-                    <th>Client Name</th>
-                    <th>Phone ID</th>
-                    <th>Phone number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $stmt->fetch()) : ?>
-                <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['client_name'] ?></td>
-                    <td><?= $row['pid'] ?></td>
-                    <td><?= $row['phone_number'] ?></td>
-                </tr>
-                <?php endwhile ?>
-            </tbody>
-        </table>
-    </div>
 
     <?php
 
@@ -176,6 +137,26 @@ $pdo = new PDO($dsn, $user, $pass, $options);
         ";
 
         $stmt = $pdo->query($sql);
+        $all = $stmt->fetchAll();
+
+        $clients = [];
+        foreach ($all as $row) {
+            $clientId = $row['id'];
+            if (!isset($clients[$clientId])) {
+                $clients[$clientId] = [
+                    'id' => $row['id'],
+                    'client_name' => $row['client_name'],
+                    'phones' => []
+                ];
+            }
+            if ($row['pid'] !== null) {
+                $clients[$clientId]['phones'][] = [
+                    'pid' => $row['pid'],
+                    'phone_number' => $row['phone_number']
+                ];
+            }
+        }
+        $all = array_values($clients);
 
     ?>
 
@@ -186,59 +167,34 @@ $pdo = new PDO($dsn, $user, $pass, $options);
                 <tr>
                     <th>Client ID</th>
                     <th>Client Name</th>
-                    <th>Phone ID</th>
-                    <th>Phone number</th>
+                    <th>Phones</th>
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $stmt->fetch()) : ?>
+                <?php foreach ($all as $row) : ?>
                 <tr>
                     <td><?= $row['id'] ?></td>
                     <td><?= $row['client_name'] ?></td>
-                    <td><?= $row['pid'] ?></td>
-                    <td><?= $row['phone_number'] ?></td>
+                    <td> 
+                        <?php if (count($row['phones']) > 0) : ?>
+                            <ul> 
+                                <?php foreach ($row['phones'] as $phone) : ?>
+                                    <li><?= $phone['phone_number'] ?></li> 
+                                <?php endforeach ?> 
+                            </ul> 
+                        <?php else : ?>
+                            No phones 
+                        <?php endif ?> 
+                    </td>
                 </tr>
-                <?php endwhile ?>
+                <?php endforeach ?>
             </tbody>
         </table>
     </div>
 
-    <?php
 
-        $sql = "
-        SELECT c.id, client_name, p.id AS pid, phone_number
-        FROM clients AS c
-        RIGHT JOIN phones AS p
-        ON c.id = p.client_id
-        ";
 
-        $stmt = $pdo->query($sql);
 
-    ?>
-
-    <div class="container">
-        <h1>👥 Clients Database RIGHT</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Client ID</th>
-                    <th>Client Name</th>
-                    <th>Phone ID</th>
-                    <th>Phone number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $stmt->fetch()) : ?>
-                <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['client_name'] ?></td>
-                    <td><?= $row['pid'] ?></td>
-                    <td><?= $row['phone_number'] ?></td>
-                </tr>
-                <?php endwhile ?>
-            </tbody>
-        </table>
-    </div>
 
     
 </body>
