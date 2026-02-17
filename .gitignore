@@ -9,3 +9,4 @@ tasks/
 *.ico
 *.tiff
 *.tif
+/vendor/
