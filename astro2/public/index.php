@@ -1,3 +1,5 @@
 <?php
 
-echo 'ASTRO - 2';
+require __DIR__ .'/../vendor/autoload.php';
+
+echo \Astro\Note\App::run();

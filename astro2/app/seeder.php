@@ -21,8 +21,20 @@ $options = [
 ];
 $pdo = new PDO($dsn, $user, $pass, $options);
 
-$notesCount = 30;
+$notesCount = 10;
 
 for ($i = 1; $i <= $notesCount; $i++) {
-    
+
+    $title = Faker::create()->sentence(rand(2, 7), false);
+    $title = rtrim($title, '.');
+    $content = implode("\n", Faker::create()->paragraphs(rand(2, 7)));
+    $date = Faker::create()->dateTimeThisYear()->format('Y-m-d');
+
+    $sql = "
+        INSERT INTO notes (title, content, date)
+        VALUES (?, ?, ?)
+    ";
+    $stmt = $pdo->prepare($sql); // vykdom paruošimą
+    $stmt->execute([$title, $content, $date]); // vykdom užklausą
+
 }

@@ -1,0 +1,6 @@
+1. DB bazės struktūra. Migracijos.
+2. Seederiai.
+3. Routingas.
+4. Kontroleriai.
+5. View.
+6. Modeliai.
