@@ -13,6 +13,6 @@ interface Data {
 
     // function destroy(int $id) : bool;
 
-    // function show(int $id) : object; // objektas pagal id
+    function show(int $id) : object; // objektas pagal id
 
 }

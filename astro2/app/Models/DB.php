@@ -4,16 +4,17 @@ namespace Astro\Note\Models;
 
 use PDO;
 use Astro\Note\Models\Data;
+use Astro\Note\App;
 
 class DB implements Data {
 
     private $pdo;
     private $table;
 
-    public function __construct($dbName, $table)
+    public function __construct($table)
     {
         $host = '127.0.0.1';
-        $db   = $dbName;
+        $db   = App::DB_NAME;
         $user = 'root';
         $pass = '';
         $charset = 'utf8mb4';
@@ -37,6 +38,20 @@ class DB implements Data {
         $stmt = $this->pdo->prepare($sql); // vykdom paruošimą
         $stmt->execute([]); // vykdom užklausą
         $data = $stmt->fetchAll();
+        return $data;
+    }
+
+
+    public function show(int $id) : object
+    {
+        $sql = "
+            SELECT *
+            FROM {$this->table}
+            WHERE id = ?
+        ";
+        $stmt = $this->pdo->prepare($sql); // vykdom paruošimą
+        $stmt->execute([$id]); // vykdom užklausą
+        $data = $stmt->fetch();
         return $data;
     }
 

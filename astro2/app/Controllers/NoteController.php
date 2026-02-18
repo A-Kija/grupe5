@@ -6,13 +6,34 @@ use Astro\Note\App;
 
 class NoteController {
 
+    private $db;
+    private $table = 'notes';
+
+    public function __construct()
+    {
+        $this->db = new DB($this->table);
+    }
+    
+
     public function home()
     {
-        $db = new DB('astro2', 'notes');
+        $data = $this->db->read();
 
-        $data = $db->read();
+        usort($data, fn($a, $b) => $b->date <=> $a->date);
 
-        return App::view('home', [$data]);
+        return App::view('home', ['notes' => $data]);
+    }
+
+    public function show(int $id)
+    {
+        $data = $this->db->show($id);
+
+        return App::view('note', ['note' => $data]);
+    }
+
+    public function create()
+    {
+        return App::view('create');
     }
 
 }
