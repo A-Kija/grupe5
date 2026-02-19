@@ -3,7 +3,7 @@
       <h1>Personal Astronomical Notes</h1>
       <p>Quiet observations, tracked across dark skies and colder nights.</p>
       <div class="hero-actions">
-        <a class="button primary" href="<?= self::URL ?>create ?>">Create New Note</a>
+        <a class="button primary" href="<?= self::URL ?>create">Create New Note</a>
       </div>
     </section>
 
@@ -21,6 +21,8 @@
           <h3><?= $note->title ?></h3>
             <p><?= implode(' ', array_slice(explode(' ', $note->content), 0, 17)) ?></p>
           <a class="note-link" href="<?= self::URL ?>note/<?= $note->id ?>">Read note</a>
+          <a class="note-link" href="<?= self::URL ?>edit/<?= $note->id ?>">Edit note</a>
+          <a class="note-link red" href="<?= self::URL ?>delete/<?= $note->id ?>">Remove note</a>
         </article>
 
         <?php endforeach ?>

@@ -136,6 +136,18 @@ body {
   background: transparent;
 }
 
+.button.danger {
+  color: #ffb9b9;
+  border-color: rgba(255, 120, 120, 0.45);
+  background: linear-gradient(120deg, rgba(255, 110, 110, 0.22), rgba(255, 110, 110, 0.06));
+}
+
+.button.danger:hover,
+.button.danger:focus {
+  color: #ffd8d8;
+  border-color: rgba(255, 140, 140, 0.75);
+}
+
 .button:hover,
 .button:focus {
   transform: translateY(-2px);
@@ -197,6 +209,11 @@ body {
   text-transform: uppercase;
 }
 
+.note-link.red {
+  color: #ff8b8b;
+  font-size: 0.7rem;
+}
+
 .note-detail,
 .form-panel {
   background: var(--panel);
@@ -235,6 +252,24 @@ body {
 .note-form {
   display: grid;
   gap: 16px;
+}
+
+.delete-preview {
+  background: var(--bg-soft);
+  border: 1px solid rgba(255, 120, 120, 0.35);
+  border-radius: 14px;
+  padding: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.delete-preview h2 {
+  font-size: 1.2rem;
+}
+
+.delete-preview p {
+  color: var(--muted);
+  line-height: 1.5;
 }
 
 .field {

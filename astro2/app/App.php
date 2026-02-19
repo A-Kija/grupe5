@@ -48,6 +48,26 @@ class App
         if ('GET' == $method && count($uri) == 1 && $uri[0] == 'create') {
             return (new NoteController())->create();
         }
+
+        if ('GET' == $method && count($uri) == 2 && $uri[0] == 'delete') {
+            return (new NoteController())->delete($uri[1]);
+        }
+
+        if ('GET' == $method && count($uri) == 2 && $uri[0] == 'edit') {
+            return (new NoteController())->edit($uri[1]);
+        }
+
+        if ('POST' == $method && count($uri) == 1 && $uri[0] == 'store') {
+            return (new NoteController())->store();
+        }
+
+        if ('POST' == $method && count($uri) == 2 && $uri[0] == 'destroy') {
+            return (new NoteController())->destroy($uri[1]);
+        }
+
+        if ('POST' == $method && count($uri) == 2 && $uri[0] == 'update') {
+            return (new NoteController())->update($uri[1]);
+        }
     }
 
 
@@ -63,7 +83,12 @@ class App
         // clear output buffer and return result
         return ob_get_clean();
     }
-        
+     
+    public static function redirect(string $url)
+    {
+        header('Location: ' . self::URL . $url);
+        return '';
+    }
     
 
 }

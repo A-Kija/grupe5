@@ -55,6 +55,43 @@ class DB implements Data {
         return $data;
     }
 
+    public function store(object $data) : bool
+    {
+        $sql = "
+            INSERT INTO {$this->table} (date, title, content)
+            VALUES (?, ?, ?)
+        ";
+        $stmt = $this->pdo->prepare($sql); // vykdom paruošimą
+        $stmt->execute([$data->date, $data->title, $data->content]); // vykdom užklausą
+
+        return true;
+    }
+
+    public function destroy(int $id) : bool
+    {
+        $sql = "
+            DELETE FROM {$this->table}
+            WHERE id = ?
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$id]);
+
+        return true;
+    }
+
+    public function update(int $id, object $data) : bool
+    {
+        $sql = "
+            UPDATE {$this->table}
+            SET date = ?, title = ?, content = ?
+            WHERE id = ?
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$data->date, $data->title, $data->content, $id]);
+
+        return true;
+    }
+
 
 
 }
