@@ -28,7 +28,7 @@ class NoteController {
             return 0; // kaip ir nereikia šito galima išmest
         });
 
-        return App::view('home', ['notes' => $data]);
+        return App::view('home', ['notes' => $data, 'title' => 'List']);
     }
 
     public function show(int $id)
@@ -76,9 +76,31 @@ class NoteController {
 
     public function update(int $id)
     {
+        // atkeliavo id skaitmuo
+
+        /*
+            $_POST
+            [
+                'date' => 'fdgfdgfd'
+                'title' => 'fdgfdgfd'
+                'content' => 'fdgfdgfd'
+            ]
+        */
+    
         $data = (object) $_POST;
 
+        /*
+            $data
+            {
+                'date' -> 'fdgfdgfd'
+                'title' -> 'fdgfdgfd'
+                'content' -> 'fdgfdgfd'
+            }
+        */
+
         $this->db->update($id, $data);
+
+        // perduodam 'note/52'
 
         return App::redirect('note/' . $id);
     }

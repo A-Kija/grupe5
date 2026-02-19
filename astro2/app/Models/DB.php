@@ -28,6 +28,7 @@ class DB implements Data {
         $this->pdo = new PDO($dsn, $user, $pass, $options);
         $this->table = $table;
     }
+    
 
     public function read() : array
     {

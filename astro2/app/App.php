@@ -36,8 +36,18 @@ class App
         $method = $_SERVER['REQUEST_METHOD'];
 
         if ('GET' == $method && count($uri) == 1 && $uri[0] == '') {
+            
             $noteController = new NoteController();
+            // paleidžia 2 Konstruktorius
+            // Sukuria NoteController objektą
+            // NoteController objektą objekto viduje sukuria DB objektą
+
             return $noteController->home();
+            // kreipiasi į savo viduje esntį DB objekto read metodą, kad gautų duomenis
+            // gautus duomenis ir home tempaltą perduoda APP::view metodui
+
+
+
             // return (new NoteController())->home();
         }
 
@@ -57,6 +67,9 @@ class App
             return (new NoteController())->edit($uri[1]);
         }
 
+
+
+
         if ('POST' == $method && count($uri) == 1 && $uri[0] == 'store') {
             return (new NoteController())->store();
         }
@@ -66,6 +79,10 @@ class App
         }
 
         if ('POST' == $method && count($uri) == 2 && $uri[0] == 'update') {
+            // paleidžia 2 Konstruktorius
+            // Sukuria NoteController objektą
+            // NoteController objektą objekto viduje sukuria DB objektą
+            // kreipiasi į savo viduje esntį  update metodą ir perduoda id
             return (new NoteController())->update($uri[1]);
         }
     }
@@ -73,10 +90,34 @@ class App
 
     public static function view(string $template, array $data = [])
     {
+        // gauna templeitą ir duomenis iš kontrolerio
+        // duomenys yra masyvas
+        /*
+            pvz: žiūrėti notą
+            $data
+            [
+            'note' =>   {
+                            'date'-> 'jksgfjhds'
+                            'title'-> 'jksgfjhds'
+                            'content'-> 'jksgfjhds'
+                        }
+            ]
+
+            t.y masyvas su viena reikšme. reikšmės indeksas yra 'note', reikšmė yra objektas su 3 savybėm
+        */
+
         extract($data); // indeksai iš masyvo yra paverčiami atskirais kintamaisiais
 
+        // po to
+        // $note = {
+        //              'date'-> 'jksgfjhds'
+        //              'title'-> 'jksgfjhds'
+        //              'content'-> 'jksgfjhds'
+        //          }
+
+
         // start output buffering
-        ob_start();
+        ob_start(); // ne esmė
         require self::DIR . 'view/top.php';
         require self::DIR . "view/{$template}.php";
         require self::DIR . 'view/bottom.php';
@@ -86,7 +127,12 @@ class App
      
     public static function redirect(string $url)
     {
+        // gaunam 'note/52'
+    
         header('Location: ' . self::URL . $url);
+
+        // susikonstravom Location: http://astro.go/note/52
+
         return '';
     }
     
