@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BebrasController;
+use App\Http\Controllers\BarsukasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +27,23 @@ Route::get('/bebras', function() {
 Route::get('/pas/barsuka', function () {
     return view('barsukas');
 });
+
+// BebrasController::class === App\Http\Controllers\BebrasController
+
+Route::get('/paprastas/bebras', [BebrasController::class, 'paprastasBebras']);
+Route::get('/blade/bebras', [BebrasController::class, 'bladeBebras']);
+
+// {spalva} yra kintamasis gali būti bilekas
+
+Route::get('/spalvotas-bebras/{spalva}', [BebrasController::class, 'spalvotasBebras']);
+
+
+// Sukurti Barsuko kontrolerį, sukurti barsuke kokį nors metodą, kuris ką nors rodo
+// Surautinti to kontrolerio metodą route faile
+// Patikrinti ar veikia
+
+Route::get('/paprastas/barsukas', [BarsukasController::class, 'paprastasBarsukas']);
+
+
+// padaryti sumatorių kuris suvedus suma/8/9 rodytų "8 + 9 = 17"
+// reikia naujo kontrolerio, metodo, routo ir blade failo
