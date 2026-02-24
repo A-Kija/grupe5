@@ -1,7 +1,7 @@
 @extends('tevas')
 
 @section('turinys')
-<h1>Žydi kieme bijūnai</h1>
+<h1 id="myButton">Žydi kieme bijūnai</h1>
 @if ($skaicius > 5)
     <h2>Šiame kieme yra daug bijūnų!</h2>
 @else

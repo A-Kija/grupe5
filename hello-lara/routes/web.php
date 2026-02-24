@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BebrasController;
 use App\Http\Controllers\BarsukasController;
 use App\Http\Controllers\BijunasController as B; // sutrumpinam iki B
+use App\Http\Controllers\FormController as F;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,3 +51,7 @@ Route::get('/paprastas/barsukas', [BarsukasController::class, 'paprastasBarsukas
 // reikia naujo kontrolerio, metodo, routo ir blade failo
 
 Route::get('/bijunas', [B::class, 'startas']);
+
+Route::get('/get', [F::class, 'showGetForm']);
+
+Route::get('/get/{d1}/{d2}', [F::class, 'showSumFromGet']);
