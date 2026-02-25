@@ -1,7 +1,7 @@
 @extends('tevas')
 
 @section('turinys')
-<form method="POST" action="{{ route('petro_rezultatas') }}">
+<form method="POST" action="{{ route('formos-apdorojimas') }}">
     <div>
         <label for="digit1">First Digit:</label>
         <input type="number" id="digit1" name="digit1" min="0" max="1000" required>

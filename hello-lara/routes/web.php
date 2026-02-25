@@ -52,14 +52,36 @@ Route::get('/paprastas/barsukas', [BarsukasController::class, 'paprastasBarsukas
 
 Route::get('/bijunas', [B::class, 'startas']);
 
+// GET form
 Route::get('/get', [F::class, 'showGetForm']);
-
-Route::get('/post', [F::class, 'showPostForm']);
-
 Route::get('/get-result', [F::class, 'showSumFromGet'])->name('jono_rezultatas'); // bus perduota ?a=8&b=9
 
-
-Route::post('/post-result', [F::class, 'makeSumFromPost'])->name('formos-apdorojimas');
+// POST forma
+Route::get('/post', [F::class, 'showPostForm']);
+Route::post('/post-result', [F::class, 'makeSumFromPost'])->name('formos-apdorojimas'); // bus perduota bodyje
+// redirektinam čia:
 Route::get('/post-result', [F::class, 'showSumFromPost'])->name('rezultato-rodymas');
 
+
+
+
+
 Route::get('/sdfdg4fdh6g4fd6fsdafjhsdiufdsa', [F::class, 'fancy']);
+
+
+
+// padaryti sumatorių kuri yra POST forma.
+// į formą suvedus 8 ir 9
+// atsakyme rodytų "8 + 9 = 17"
+// po post metodoto turi būti redirectas
+// reikia naujo kontrolerio, metodų, routų ir bladų failų
+
+// padaryti surinkėją kuris yra POST forma
+// į formą suvedus skaičių 7
+// rodytų 7
+// dar kartą į formą suvedus skaičių 9
+// rodytų 7 9
+// dar kartą į formą suvedus skaičių 10
+// rodytų 7 9 10
+// reikia naujo kontrolerio, metodų, routų ir bladų failų
+// dar galit pagalvoti apie mygtuką, kuris viską ištrina

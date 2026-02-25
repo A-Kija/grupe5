@@ -6,14 +6,12 @@ use Illuminate\Http\Request;
 
 class FormController extends Controller
 {
+    
+    // GET
+
     public function showGetForm()
     {
         return view('forms.get');
-    }
-
-    public function showPostForm()
-    {
-        return view('forms.post');
     }
 
     public function showSumFromGet(Request $req)
@@ -26,13 +24,30 @@ class FormController extends Controller
     }
 
 
-    
+    // POST
+    public function showPostForm()
+    {
+        return view('forms.post');
+    }
 
-    public function showSumFromPost(Request $req)
+    public function makeSumFromPost(Request $req)
     {
         $d1 = $req->input('digit1');
         $d2 = $req->input('digit2');
         $rez = $d1 + $d2;
+
+        // session(['rez' => $rez]); // įrašom į sesiją (pastovus)
+
+        return redirect()->route('rezultato-rodymas')
+        ->with(['rez' => $rez]); // flash to session (vienkartinis panaudojimas)
+    }
+
+
+
+
+    public function showSumFromPost()
+    {
+        $rez = session('rez', 'Nėra'); // imam rez, jeigu nieko nėra tada "Nėra"
 
         return view('forms.post_result', ['rez' => $rez]);
     }
