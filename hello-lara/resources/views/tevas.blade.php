@@ -8,6 +8,9 @@
     <title>@yield('pavadinimas')</title>
 </head>
 <body>
+
+    {{-- @include('nav') --}}
+
     @yield('turinys')
 </body>
 </html>

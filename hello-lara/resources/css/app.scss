@@ -1,31 +1,64 @@
-h1 {
-    color: skyblue;
+:root {
+    color-scheme: dark;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 2rem;
+    background: radial-gradient(circle at top, #1f2937 0%, #0f172a 45%, #020617 100%);
+    color: #e2e8f0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    color: #f8fafc;
+}
+
+p,
+label,
+li {
+    color: #cbd5e1;
+}
+
+a {
+    color: #93c5fd;
+
+    &:hover {
+        color: #bfdbfe;
+    }
 }
 
 form {
     max-width: 500px;
     margin: 2rem auto;
     padding: 2rem;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: linear-gradient(145deg, #111827 0%, #1e293b 100%);
+    border: 1px solid #334155;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
 }
 
-input, textarea {
+input,
+textarea {
     width: 100%;
     padding: 12px 16px;
     margin: 1rem 0;
-    border: 2px solid #e0e0e0;
+    border: 2px solid #334155;
     border-radius: 8px;
     font-size: 1rem;
+    color: #e2e8f0;
+    background-color: #0f172a;
     transition: all 0.3s ease;
     box-sizing: border-box;
-    
+
     &:focus {
         outline: none;
-        border-color: #4a90e2;
-        box-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
-        background-color: #fff;
+        border-color: #60a5fa;
+        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+        background-color: #111827;
     }
 }
 
@@ -33,20 +66,20 @@ button {
     width: 100%;
     padding: 12px 24px;
     margin-top: 1rem;
-    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-    color: white;
-    border: none;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #f8fafc;
+    border: 1px solid #3b82f6;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    
+    transition: all 0.25s ease;
+
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
     }
-    
+
     &:active {
         transform: translateY(0);
     }
