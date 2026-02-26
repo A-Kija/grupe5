@@ -5,6 +5,7 @@ use App\Http\Controllers\BebrasController;
 use App\Http\Controllers\BarsukasController;
 use App\Http\Controllers\BijunasController as B; // sutrumpinam iki B
 use App\Http\Controllers\FormController as F;
+use App\Http\Controllers\SkaiciusController as S;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,10 @@ Route::get('/sdfdg4fdh6g4fd6fsdafjhsdiufdsa', [F::class, 'fancy']);
 // atsakyme rodytų "8 + 9 = 17"
 // po post metodoto turi būti redirectas
 // reikia naujo kontrolerio, metodų, routų ir bladų failų
+
+Route::get('/du-skaiciai', [S::class, 'forma2Skaiciai']);
+Route::post('/du-skaiciai-rezultatas', [S::class, 'formos2SkaiciaiApdorojimas'])->name('apdorojimas-2');
+Route::get('/du-skaiciai-rezultatas', [S::class, 'formos2SkaiciaiRezultatas'])->name('rodymas-2');
 
 // padaryti surinkėją kuris yra POST forma
 // į formą suvedus skaičių 7
