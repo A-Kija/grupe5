@@ -10,7 +10,7 @@
 <body>
 
     {{-- @include('nav') --}}
-
+    @include('errors')
     @yield('turinys')
 </body>
 </html>

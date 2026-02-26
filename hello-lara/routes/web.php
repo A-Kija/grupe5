@@ -90,3 +90,9 @@ Route::get('/du-skaiciai-rezultatas', [S::class, 'formos2SkaiciaiRezultatas'])->
 // rodytų 7 9 10
 // reikia naujo kontrolerio, metodų, routų ir bladų failų
 // dar galit pagalvoti apie mygtuką, kuris viską ištrina
+
+Route::get('/trys-skaiciai', [S::class, 'forma3Skaiciai']);
+Route::post('/trys-skaiciai-rezultatas', [S::class, 'formos3SkaiciaiApdorojimas'])->name('apdorojimas-3');
+Route::get('/trys-skaiciai-rezultatas', [S::class, 'formos3SkaiciaiRezultatas'])->name('rodymas-3');
+
+Route::post('/valyti', [S::class, 'formos3SkaiciaiValymas'])->name('valom-lauka');
