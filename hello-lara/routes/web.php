@@ -96,3 +96,6 @@ Route::post('/trys-skaiciai-rezultatas', [S::class, 'formos3SkaiciaiApdorojimas'
 Route::get('/trys-skaiciai-rezultatas', [S::class, 'formos3SkaiciaiRezultatas'])->name('rodymas-3');
 
 Route::post('/valyti', [S::class, 'formos3SkaiciaiValymas'])->name('valom-lauka');
+
+
+// 3 gyvulių CRUD

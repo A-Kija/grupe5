@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
+use App\Models\Farm;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        for($i = 0; $i < 22; $i++) {
+            DB::table('farms')->insert([
+                'animal' => Farm::ANIMALS[rand(0, count(Farm::ANIMALS) - 1)],
+                'weight' => rand(50, 4000) / 100, // rand 3875 => 38.75
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }
