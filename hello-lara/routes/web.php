@@ -6,6 +6,7 @@ use App\Http\Controllers\BarsukasController;
 use App\Http\Controllers\BijunasController as B; // sutrumpinam iki B
 use App\Http\Controllers\FormController as F;
 use App\Http\Controllers\SkaiciusController as S;
+use App\Http\Controllers\FarmController as Farm;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,3 +100,16 @@ Route::post('/valyti', [S::class, 'formos3SkaiciaiValymas'])->name('valom-lauka'
 
 
 // 3 gyvulių CRUD
+
+
+
+
+Route::prefix('/farm')->name('farm-')->group(function () {
+    Route::get('/', [Farm::class, 'read'])->name('read');
+    Route::get('/create', [Farm::class, 'create'])->name('create');
+    Route::post('/', [Farm::class, 'store'])->name('store');
+    Route::get('/{id}', [Farm::class, 'show'])->name('show'); // /farm/   farm-show
+    Route::get('/{id}/edit', [Farm::class, 'edit'])->name('edit');
+    Route::put('/{id}', [Farm::class, 'update'])->name('update'); // /farm/{id} farm-update
+    Route::delete('/{id}', [Farm::class, 'destroy'])->name('destroy');
+});
