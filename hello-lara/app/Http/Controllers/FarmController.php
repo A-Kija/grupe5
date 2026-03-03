@@ -5,6 +5,48 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Farm;
 
+
+/*
+Funkcijų vardai pagal CRUD:
+
+read, show, create, edit, delete (rodomieji)
+return view
+
+store, update, destroy (vykdomieji)
+return redirect
+
+CRUD metodai formoje:
+
+get form=>GET    visi rodomieji
+post form=>POST vykdomasis store
+delete form=>POST + @method('DELETE') vykdomasis destroy
+put  form=>POST + @method('PUT') vykdomasis update
+
+Laravel metodai:
+
+read => ::all()
+create => ---
+store => ::create
+delete => ::find
+destroy => ::find->delete
+edit => ::find
+update => ::find->update
+
+Ko reikia metodams:
+
+read => ---
+create => ---
+store => Request(data)
+delete => id(int)
+destroy => id(int)
+edit => id(int)
+update => Request(data), id(int)
+show => id(int)
+
+*/
+
+
+
 class FarmController extends Controller
 {
     public function read()
@@ -34,6 +76,38 @@ class FarmController extends Controller
 
     public function delete(int $id)
     {
-        return view('farm.delete', ['id' => $id]);
+        $animal = FARM::find($id);
+        
+        return view('farm.delete', ['animal' => $animal]);
+    }
+
+    public function destroy(int $id)
+    {
+        $animal = FARM::find($id);
+        $animal->delete();
+
+        return redirect()->route('farm-read');
+    }
+
+    public function edit(int $id)
+    {
+        $animal = FARM::find($id);
+        
+        return view('farm.edit', ['animal' => $animal, 'animals' => Farm::ANIMALS]);
+    }
+
+    public function update(Request $req, int $id)
+    {
+        $animal = FARM::find($id);
+        $animal->update($req->all());
+
+        return redirect()->route('farm-read');
+    }
+
+    public function show(int $id)
+    {
+        $animal = FARM::find($id);
+        
+        return view('farm.show', ['animal' => $animal]);
     }
 }

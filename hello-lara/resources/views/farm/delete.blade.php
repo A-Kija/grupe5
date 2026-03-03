@@ -2,8 +2,8 @@
 
 @section('turinys')
 
-<form method="POST" action="{{route('farm-destroy', ['id' => $id])}}">
-    <h1>Ar tikrai norite ištrinti</h1>
+<form method="POST" action="{{route('farm-destroy', ['id' => $animal->id])}}">
+    <h1>Ar tikrai norite ištrinti <i>{{$animal->animal}}</i></h1>
     @csrf
     @method('DELETE')
     <button type="submit">Taip</button>
