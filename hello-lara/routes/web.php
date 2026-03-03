@@ -111,5 +111,6 @@ Route::prefix('/farm')->name('farm-')->group(function () {
     Route::get('/{id}', [Farm::class, 'show'])->name('show'); // /farm/   farm-show
     Route::get('/{id}/edit', [Farm::class, 'edit'])->name('edit');
     Route::put('/{id}', [Farm::class, 'update'])->name('update'); // /farm/{id} farm-update
+    Route::get('/{id}/delete', [Farm::class, 'delete'])->name('delete');
     Route::delete('/{id}', [Farm::class, 'destroy'])->name('destroy');
 });

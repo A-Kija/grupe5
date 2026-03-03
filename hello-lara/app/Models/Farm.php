@@ -9,6 +9,12 @@ class Farm extends Model
 {
     use HasFactory;
 
+    // db lentelės stulpeliai
+    protected $fillable = [
+        'weight',
+        'animal'
+    ]; 
+
     const ANIMALS = ['avis', 'antis', 'antilopė'];
 
 }
