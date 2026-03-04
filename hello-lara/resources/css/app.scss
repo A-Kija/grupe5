@@ -320,3 +320,20 @@ a.button {
         box-shadow: 0 8px 18px rgba(4, 120, 87, 0.3);
     }
 }
+
+.small-danger {
+    margin-top: -0.5rem;
+    margin-bottom: 0.75rem;
+    color: #f87171;
+    font-size: 0.85rem;
+}
+
+input.is-invalid,
+select.is-invalid {
+    border-color: #f87171;
+
+    &:focus {
+        border-color: #f87171;
+        box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.2);
+    }
+}       

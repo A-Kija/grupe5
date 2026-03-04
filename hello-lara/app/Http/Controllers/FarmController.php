@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Farm;
+use App\Http\Requests\StoreFarmRequest;
 
 
 /*
@@ -66,7 +67,7 @@ class FarmController extends Controller
         return view('farm.create', ['animals' => Farm::ANIMALS]);
     }
 
-    public function store(Request $req)
+    public function store(StoreFarmRequest $req)
     {
         Farm::create($req->all()); // prideda naują į DB 
         // $req->all() viskas ką siunčia requestas
