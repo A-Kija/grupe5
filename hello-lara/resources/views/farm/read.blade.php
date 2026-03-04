@@ -19,6 +19,7 @@
         </li>
         @endforeach
     </ul>
+    {{ $animals->onEachSide(1)->links() }} {{-- puslapių nuorodos --}}
 </div>
 
 @endsection

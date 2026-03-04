@@ -6,19 +6,25 @@
     <h1>Redaguoti gyvūlį fermoje</h1>
     <div>
         <label>Gyvulys:</label>
-        <select name="animal">
+        <select name="animal" class="@error('animal') is-invalid @enderror">
             <option value="">Pasirinkti</option>
             @foreach($animals as $animalSelect)
                 <option
-                @if($animalSelect == $animal->animal) selected @endif
+                @if($animalSelect == old('animal', $animal->animal)) selected @endif
                 value="{{$animalSelect}}">Gyvulys {{$animalSelect}}</option>
             @endforeach
         </select>
+        @error('animal')
+        <div class="small-danger">{{ $message }}</div>
+        @enderror
     </div>
 
     <div>
         <label>Svoris Kg:</label>
-        <input type="number" name="weight" step="0.01" value="{{$animal->weight}}">
+        <input type="number" name="weight" step="0.01" value="{{old('weight', $animal->weight)}}" class="@error('weight') is-invalid @enderror">
+        @error('weight')
+        <div class="small-danger">{{ $message }}</div>
+        @enderror
     </div>
     @method('PUT')
     @csrf
@@ -26,4 +32,4 @@
 </form>
 @endsection
 
-@section('pavadinimas', 'Readguojamas gyvulys')
+@section('pavadinimas', 'Redaguojamas gyvulys')
