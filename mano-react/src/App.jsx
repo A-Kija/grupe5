@@ -1,15 +1,16 @@
 import './App.css';
-import Bebras from './components/01/Bebras';
-import Zb from './components/01/ZaliasBarsukas';
+import DaugA from './components/02/DaugA';
+import Plus1 from './components/02/Plus1';
+import Skaicius from './components/02/Skaicius';
 
 function App() {
 
   return (
     <div className="App">
-      <h1>Mano <br/> React</h1>
-      <Bebras koks='geras' dydis='80px'></Bebras>
-      <Bebras koks='piktas' dydis='40px'></Bebras>
-      <Zb></Zb>
+      <h1>Mano React</h1>
+      <Skaicius></Skaicius>
+      <Plus1></Plus1>
+      <DaugA></DaugA>
     </div>
   );
 }

@@ -54,6 +54,43 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+button.orange {
+  background-color: #ff8c00;
+}
+button.orange:hover {
+  border-color: #a1fd03;
+}
+
+button.red {
+  background-color: #ff0000;
+}
+button.red:hover {
+  border-color: #ff00ff;
+}
+
+button.green {
+  background-color: #00ff00;
+}
+button.green:hover {
+  border-color: #00ffff;
+}
+
+button.blue {
+  background-color: #0000ff;
+}
+button.blue:hover {
+  border-color: #00ffff;
+}
+
+button.yellow {
+  background-color: #ffff00;
+  color: #000000;
+}
+button.yellow:hover {
+  border-color: #ff00ff;
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
