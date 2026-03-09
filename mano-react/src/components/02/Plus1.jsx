@@ -6,10 +6,9 @@ export default function Plus1() {
     const [sk, setSk] = useState(0);
 
     const plusOne = _ => {
-        setSk(sk + 1);
+        setSk(ankstesnisSkaicius => ankstesnisSkaicius + 1);
     }
-    
-    
+        
     
     return (
         <>
