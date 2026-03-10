@@ -1,18 +1,19 @@
 import './App.css';
-import DaugA from './components/02/DaugA';
-import Mas from './components/02/Mas';
-import Plus1 from './components/02/Plus1';
-import Skaicius from './components/02/Skaicius';
+import Fun from './components/03/Fun';
+import Select from './components/03/Select';
+import Text from './components/03/Text';
+import Texts from './components/03/Texts';
+
 
 function App() {
 
   return (
     <div className="App">
       <h1>Mano React</h1>
-      <Skaicius></Skaicius>
-      <Plus1></Plus1>
-      <DaugA></DaugA>
-      <Mas></Mas>
+          <Fun></Fun>
+          <Text></Text>
+          <Texts></Texts>
+          <Select></Select>
     </div>
   );
 }
