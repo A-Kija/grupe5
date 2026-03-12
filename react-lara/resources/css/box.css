@@ -1,0 +1,15 @@
+.layout {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: black;
+    color: white;
+    font-family: monospace;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 45px;
+    padding: 20px 0;
+    text-align: center;
+}
