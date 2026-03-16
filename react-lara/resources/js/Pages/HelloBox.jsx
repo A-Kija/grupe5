@@ -5,7 +5,7 @@ import Sq from '@/Components/Sq';
 import rand from '@/Functions/rand';
 import randColor from '@/Functions/randColor';
 
-export default function HelloBox({ number, boxesUrl }) {
+export default function HelloBox({ number, boxesUrl, saveBoxesUrl }) {
 
 
     const [sq, setSq] = useState(null);
@@ -29,6 +29,18 @@ export default function HelloBox({ number, boxesUrl }) {
 
     }
 
+    const saveSq = _ => {
+        axios.post(saveBoxesUrl, {sq})
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(e => console.log(e))
+    }
+
+    const remove = id => {
+        setSq(oldBoxes => oldBoxes.filter(box => box.id !== id)); // iš masyvo išmetam elementą pagal
+    }
+
 
     if (sq === null) {
         return (
@@ -48,11 +60,12 @@ export default function HelloBox({ number, boxesUrl }) {
                         ?
                         <h3>Kvadratukų nėra. Galite sukurti.</h3>
                         :
-                        sq.map(s => <Sq key={s.id} sq={s}></Sq>)
+                        sq.map(s => <Sq key={s.id} sq={s} remove={remove}></Sq>)
                 }
             </div>
             <div className="buttons">
                 <button className="green" onClick={addSq}>ADD SQ</button>
+                <button className="orange" onClick={saveSq}>Save SQ</button>
             </div>
         </div>
     );
