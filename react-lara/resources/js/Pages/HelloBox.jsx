@@ -6,7 +6,7 @@ import rand from '@/Functions/rand';
 import randColor from '@/Functions/randColor';
 import EditSq from '@/Components/EditSq';
 
-export default function HelloBox({ number, boxesUrl, saveBoxesUrl, updateBoxesUrl }) {
+export default function HelloBox({ number, boxesUrl, saveBoxesUrl, updateBoxUrl }) {
 
 
     const [sq, setSq] = useState(null);
@@ -27,11 +27,19 @@ export default function HelloBox({ number, boxesUrl, saveBoxesUrl, updateBoxesUr
         if (updateSq === null) {
             return;
         }
-        axios.put(updateBoxesUrl + '/' + updateSq.id, updateSq)
-        .then(res => {
-            console.log(res.data)
-        })
-        .catch(e => console.log(e))
+
+        const updateBoxUrlWithId = updateBoxUrl.replace('__ID__', updateSq.id);
+
+        setSq(boxes => boxes.map(s => s.id === updateSq.id ? { ...s, color: updateSq.color, number: updateSq.number } : s));
+
+
+        axios.put(updateBoxUrlWithId, updateSq)
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(e => console.log(e))
+
+        setEditSq(null); //uždarom redagavimą
 
     }, [updateSq]);
 
@@ -45,11 +53,11 @@ export default function HelloBox({ number, boxesUrl, saveBoxesUrl, updateBoxesUr
     }
 
     const saveSq = _ => {
-        axios.post(saveBoxesUrl, {sq})
-        .then(res => {
-            console.log(res.data)
-        })
-        .catch(e => console.log(e))
+        axios.post(saveBoxesUrl, { sq })
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(e => console.log(e))
     }
 
     const remove = id => {
@@ -83,7 +91,7 @@ export default function HelloBox({ number, boxesUrl, saveBoxesUrl, updateBoxesUr
                 <button className="orange" onClick={saveSq}>Save SQ</button>
             </div>
             {
-              editSq === null ? null : <EditSq editSq={editSq} setEditSq={setEditSq} setUpdateSq={setUpdateSq}/>
+                editSq === null ? null : <EditSq editSq={editSq} setEditSq={setEditSq} setUpdateSq={setUpdateSq} />
             }
         </div>
     );

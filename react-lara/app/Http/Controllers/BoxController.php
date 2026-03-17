@@ -14,6 +14,7 @@ class BoxController extends Controller
             'number' => 'No 7',
             'boxesUrl' => route('get-boxes'),
             'saveBoxesUrl' => route('save-boxes'),
+            'updateBoxUrl' => route('update-box', ['id' => '__ID__']), // URL su placeholderiu, kurį React'as pakeis tikru ID
             ]);
     }
 
@@ -31,7 +32,7 @@ class BoxController extends Controller
 
         $boxes = Box::all()->map(function ($box) {
             return [
-                'number' => $box->number,
+                'number' => str_pad((string) $box->number, 4, '0', STR_PAD_LEFT),
                 'color' => $box->color,
                 'id' => $box->box_id, // neatitikimas recte 'id' ir box_id, todėl React'e bus box.id, o ne box.box_id
             ];
@@ -101,6 +102,24 @@ class BoxController extends Controller
             'status' => 'ok'
         ]);
 
+    }
+
+    public function updateBox(Request $req, $id)
+    {
+        // dd($req->all()); // atsiųsti duomenys
+        // dd($id); // atsiųstas ID
+
+        $box = Box::where('box_id', $id)->first(); // randame dėžę pagal box_id stulpelį
+
+        if (!$box) {
+            return response()->json(['status' => 'error', 'message' => 'Box not found'], 404);
+        }
+
+        $box->number = $req->number;
+        $box->color = $req->color;
+        $box->save();
+
+        return response()->json(['status' => 'ok', 'message' => 'Box updated']);
     }
 
 }

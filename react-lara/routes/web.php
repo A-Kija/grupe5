@@ -30,6 +30,7 @@ Route::get('/box', [B::class, 'helloBox']);
 Route::get('/old-box', [B::class, 'helloOldBox']);
 Route::get('/get-boxes', [B::class, 'getBoxes'])->name('get-boxes');
 Route::post('/save-boxes', [B::class, 'saveBoxes'])->name('save-boxes');
+Route::put('/update-box/{id}', [B::class, 'updateBox'])->name('update-box');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

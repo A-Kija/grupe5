@@ -96,6 +96,7 @@ button.yellow:hover {
     font-family: monospace, monospace;
     font-size: 20px;
     position: relative;
+    /* animation: spin 20s linear infinite; */
 }
 
 .kvadratas .removeButton {
