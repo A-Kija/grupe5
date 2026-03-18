@@ -59,6 +59,34 @@ class TruckBrandController extends Controller
 
     public function show($id) {
         $truckBrand = TruckBrand::findOrFail($id);
-        return view('truck_brands.show', compact('truckBrand'));
+        $fromPage = request()->query('from-page', 1); // gauname iš URL query parametro 'from-page', jei nėra, tai priskiriame 1
+        return view('truck_brands.show', compact('truckBrand', 'fromPage'));
+    }
+
+    public function delete($id) {
+        $truckBrand = TruckBrand::findOrFail($id);
+
+        // dd($truckBrand->trucks); // išveda visus sunkvežimius, kurie priklauso šiai markei kaip kolekciją
+
+        //dd($truckBrand->trucks()); // išveda visus sunkvežimius, kurie priklauso šiai markei, bet kaip query builder objektą, o ne kolekciją
+
+        // dd($truckBrand->trucks->count()); // išveda sunkvežimių skaičių, kurie priklauso šiai markei
+        
+        // dd($truckBrand->trucks()->count()); // išveda sunkvežimių skaičių, kurie priklauso šiai markei, bet naudojant query builder metodą
+
+        if ($truckBrand->trucks()->count() > 0) {
+            return redirect()->route('truck-brands-index', ['page' => request()->query('from-page', 1)])->with('info_zinute', 'Negalima ištrinti modelio, nes yra priskirtų sunkvežimių');
+        }
+        
+        $fromPage = request()->query('from-page', 1);
+        return view('truck_brands.delete', compact('truckBrand', 'fromPage'));
+    }
+
+    public function destroy($id) {
+        $truckBrand = TruckBrand::findOrFail($id);
+        $truckBrand->delete();
+
+        $fromPage = request()->query('from-page', 1);
+        return redirect()->route('truck-brands-index', ['page' => $fromPage])->with('success_zinute', 'Modelis sėkmingai ištrintas');
     }
 }

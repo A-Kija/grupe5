@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedInteger('power');
             $table->year('year');
             $table->unsignedBigInteger('truck_brand_id');
-            $table->foreign('truck_brand_id')->references('id')->on('truck_brands')->onDelete('cascade');
+            $table->foreign('truck_brand_id')->references('id')->on('truck_brands')->onDelete('restrict');
         });
     }
 

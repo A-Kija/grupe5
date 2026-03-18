@@ -9,11 +9,12 @@
         <li class="list-group-item">
             <div class="animal-item">
             {{ $truckBrand->name }}
+            ({{ $truckBrand->trucks()->count() }})
             </div>
             <div class="buttons">
-                <a href="{{route('truck-brands-edit', ['id' => $truckBrand->id])}}" class="button button-edit">Redaguoti</a>
-                <a href="{{route('truck-brands-show', ['id' => $truckBrand->id])}}" class="button button-show">Peržiūrėti</a>
-                <a href="{{route('truck-brands-delete', ['id' => $truckBrand->id])}}" class="button button-delete">Ištrinti</a>
+                <a href="{{route('truck-brands-edit', ['id' => $truckBrand->id, 'from-page' => $truckBrands->currentPage()])}}" class="button button-edit">Redaguoti</a>
+                <a href="{{route('truck-brands-show', ['id' => $truckBrand->id, 'from-page' => $truckBrands->currentPage()])}}" class="button button-show">Peržiūrėti</a>
+                <a href="{{route('truck-brands-delete', ['id' => $truckBrand->id, 'from-page' => $truckBrands->currentPage()])}}" class="button button-delete">Ištrinti</a>
             </div>
         </li>
         @endforeach

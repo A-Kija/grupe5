@@ -11,4 +11,9 @@ class TruckBrand extends Model
 
     protected $fillable = ['name'];
     public $timestamps = false; // išjungia created_at ir updated_at laukus
+
+
+    public function trucks() {
+        return $this->hasMany(Truck::class, 'truck_brand_id', 'id');
+    }
 }

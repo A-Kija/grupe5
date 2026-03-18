@@ -14,7 +14,7 @@
     @method('PUT')
     @csrf
     <button type="submit">Saugoti</button>
-    <a href="{{route('truck-brands-index')}}" class="button button-show">Visi modeliai</a>
+    <a href="{{route('truck-brands-index', ['page' => request()->query('from-page', 1)])}}" class="button cancel-button">Visi modeliai</a>
 </form>
 @endsection
 

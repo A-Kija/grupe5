@@ -13,7 +13,7 @@
     </div>
     @csrf
     <button type="submit">Pridėti</button>
-    <a href="{{route('truck-brands-index')}}" class="button button-show">Visi modeliai</a>
+    <a href="{{route('truck-brands-index')}}" class="button cancel-button">Visi modeliai</a>
 </form>
 @endsection
 
