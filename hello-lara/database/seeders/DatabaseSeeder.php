@@ -22,5 +22,37 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
+
+        $tracks = ['Volvo', 'Scania', 'MAN', 'Mercedes', 'DAF', 'Iveco', 'Renault', 'Ford', 'GMC', 'Freightliner', 'Kamaz'];
+        foreach($tracks as $track) {
+            DB::table('truck_brands')->insert([
+                'name' => $track,
+            ]);
+        }
+
+        // Add 112 trucks
+        for($i = 0; $i < 112; $i++) {
+            DB::table('trucks')->insert([
+                'color' => ['red', 'blue', 'green', 'black', 'white', 'yellow', 'multicolor', 'striped'][rand(0, 7)],
+                'power' => rand(100, 1000),
+                'year' => rand(1990, 2026),
+                'truck_brand_id' => rand(1, count($tracks)),
+            ]);
+        }
+
+        /* 
+            $color = ['red', 'blue', 'green', 'black', 'white', 'yellow', 'multicolor', 'striped'][rand(0, 7)];
+             
+            arba
+
+            $mas = ['red', 'blue', 'green', 'black', 'white', 'yellow', 'multicolor', 'striped'];
+            $ind = rand(0, 7);
+            $color = $mas[$ind];
+         */
+
+
+
+
+
     }
 }

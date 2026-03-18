@@ -8,6 +8,9 @@ use App\Http\Controllers\FormController as F;
 use App\Http\Controllers\SkaiciusController as S;
 use App\Http\Controllers\FarmController as Farm;
 
+use App\Http\Controllers\TruckBrandController as TB;
+use App\Http\Controllers\TruckController as T;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -114,3 +117,28 @@ Route::prefix('/farm')->name('farm-')->group(function () {
     Route::get('/{id}/delete', [Farm::class, 'delete'])->name('delete');
     Route::delete('/{id}', [Farm::class, 'destroy'])->name('destroy');
 });
+
+// Sunkvežimių CRUD 2 lentelėms: truck_brands ir trucks
+
+Route::prefix('/truck-brands')->name('truck-brands-')->group(function () {
+    Route::get('/', [TB::class, 'index'])->name('index');
+    Route::get('/create', [TB::class, 'create'])->name('create');
+    Route::post('/', [TB::class, 'store'])->name('store');
+    Route::get('/{id}', [TB::class, 'show'])->name('show'); // /truck-brands/   truck-brands-show
+    Route::get('/{id}/edit', [TB::class, 'edit'])->name('edit');
+    Route::put('/{id}', [TB::class, 'update'])->name('update'); // /truck-brands/{id} truck-brands-update
+    Route::get('/{id}/delete', [TB::class, 'delete'])->name('delete');
+    Route::delete('/{id}', [TB::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('/trucks')->name('trucks-')->group(function () {
+    Route::get('/', [T::class, 'index'])->name('index');
+    Route::get('/create', [T::class, 'create'])->name('create');
+    Route::post('/', [T::class, 'store'])->name('store');
+    Route::get('/{id}', [T::class, 'show'])->name('show'); // /trucks/   trucks-show
+    Route::get('/{id}/edit', [T::class, 'edit'])->name('edit');
+    Route::put('/{id}', [T::class, 'update'])->name('update'); // /trucks/{id} trucks-update
+    Route::get('/{id}/delete', [T::class, 'delete'])->name('delete');
+    Route::delete('/{id}', [T::class, 'destroy'])->name('destroy');
+});
+
