@@ -8,10 +8,64 @@ use App\Models\TruckBrand;
 
 class TruckController extends Controller
 {
-    public function index() {
-        $trucks = Truck::paginate(17);
+    public function index(Request $request) {
+        $sortOptions = Truck::SORTABLE;
+        $perPageOptions = Truck::PER_PAGE_OPTIONS;
+        $trackBrands = TruckBrand::orderBy('name')->get(); // gauname visus modelius, kad galėtume rodyti juos kaip filtravimo parinktį
+        // $trucks = Truck::paginate(17);
+        // with sorting
+        $trucksQuery = Truck::query(); // užklausų gabaliukai duomenų bazės užklausoms kurti
+        // $sort = request('sort'); // gauname sort parametro reikšmę iš URL
+        $sort = $request->query('sort'); // gauname sort parametro reikšmę iš URL
 
-        return view('tracks.read', compact('trucks'));
+        // AI Gaidynas
+        // if ($sort && array_key_exists($sort, $sortOptions)) {
+        //     switch ($sort) {
+        //         case 'power_asc':
+        //             $trucksQuery->orderBy('power', 'asc');
+        //             break;
+        //         case 'power_desc':
+        //             $trucksQuery->orderBy('power', 'desc');
+        //             break;
+        //         case 'year_asc':
+        //             $trucksQuery->orderBy('year', 'asc');
+        //             break;
+        //         case 'year_desc':
+        //             $trucksQuery->orderBy('year', 'desc');
+        //             break;
+        //     }
+        // }
+
+        // AI Gaidynas - optimizuotas nesaugus
+        // if ($sort && array_key_exists($sort, $sortOptions)) {
+        //     [$field, $direction] = explode('_', $sort); // padalina "power_asc" į ["power", "asc"]
+        //     $trucksQuery->orderBy($field, $direction);
+        // }
+
+        // Kaip reikia naudojant match
+
+        $trucksQuery = match ($sort) {
+            'power_asc' => $trucksQuery->orderBy('power', 'asc'),
+            'power_desc' => $trucksQuery->orderBy('power', 'desc'),
+            'year_asc' => $trucksQuery->orderBy('year', 'asc'),
+            'year_desc' => $trucksQuery->orderBy('year', 'desc'),
+            default => $trucksQuery
+        };
+
+        $filterModel = $request->query('model'); // gauname model parametro reikšmę iš URL
+        if ($filterModel) {
+            $trucksQuery->where('truck_brand_id', $filterModel); // filtruojame pagal modelį
+        }
+
+        $perPage = $request->query('per_page', 17); // gauname per_page parametro reikšmę iš URL, numatytoji reikšmė 17
+        // make sure per_page is in allowed options
+        if (!in_array($perPage, $perPageOptions)) {
+            $perPage = 17; // jei ne, nustatome numatytąją reikšmę
+        }
+
+        $trucks = $trucksQuery->paginate($perPage)->withQueryString(); // išlaiko sort parametro reikšmę puslapių perjungimo metu
+
+        return view('tracks.read', compact('trucks', 'sortOptions', 'trackBrands', 'perPageOptions'));
     }
 
     public function create() {

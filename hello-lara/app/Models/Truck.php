@@ -18,6 +18,15 @@ class Truck extends Model
 
     public $timestamps = false;
 
+    const SORTABLE = [
+        'power_desc' => 'pirma galingiausi',
+        'power_asc' => 'pirma silpniausi',
+        'year_desc' => 'pirma naujausi',
+        'year_asc' => 'pirma seniausi',
+    ];
+
+    const PER_PAGE_OPTIONS = [17, 5, 11, 29, 37];
+
     public function truckBrand() {
         return $this->belongsTo(TruckBrand::class, 'truck_brand_id', 'id');
     }
