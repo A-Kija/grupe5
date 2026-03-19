@@ -8,4 +8,34 @@ use Illuminate\Database\Eloquent\Model;
 class Truck extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'color',
+        'power',
+        'year',
+        'truck_brand_id'
+    ];
+
+    public $timestamps = false;
+
+    public function truckBrand() {
+        return $this->belongsTo(TruckBrand::class, 'truck_brand_id', 'id');
+    }
+
+    public function getPowerInKilowattsAttribute() {
+        return round($this->power * 0.7355, 2);
+    }
+    // Šis metodas leidžia gauti sunkvežimio galią kilovatais naudojant $truck->power_in_kilowatts
+
+    public function model() {
+        return $this->truckBrand ? $this->truckBrand->name : 'Nežinomas modelis';
+    }
+    // Šis metodas leidžia gauti sunkvežimio modelį naudojant $truck->model()
+
+    public function getModelAttribute()
+    {
+        return $this->truckBrand ? $this->truckBrand->name : 'Nežinomas modelis';
+    }
+    // Šis metodas leidžia gauti sunkvežimio modelį naudojant $truck->model
+
 }

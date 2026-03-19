@@ -10,6 +10,8 @@
             <span>{{ $truck->color }}</span>
             <span>{{ $truck->year }}</span>
             <span>{{ $truck->power }}AG</span>
+            <span>{{ $truck->power_in_kilowatts }}kW</span>
+            <a href="{{route('trucks-show', ['id' => $truck->id])}}" class="button button-show">Peržiūrėti</a>
         </li>
         @endforeach
     </ol>
