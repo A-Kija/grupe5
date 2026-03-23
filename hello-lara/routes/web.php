@@ -10,6 +10,7 @@ use App\Http\Controllers\FarmController as Farm;
 
 use App\Http\Controllers\TruckBrandController as TB;
 use App\Http\Controllers\TruckController as T;
+use App\Http\Controllers\TagController as Tag;
 
 /*
 |--------------------------------------------------------------------------
@@ -140,6 +141,17 @@ Route::prefix('/trucks')->name('trucks-')->group(function () {
     Route::put('/{id}', [T::class, 'update'])->name('update'); // /trucks/{id} trucks-update
     Route::get('/{id}/delete', [T::class, 'delete'])->name('delete');
     Route::delete('/{id}', [T::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('/tags')->name('tags-')->group(function () {
+    Route::get('/', [Tag::class, 'index'])->name('index');
+    Route::get('/create', [Tag::class, 'create'])->name('create');
+    Route::post('/', [Tag::class, 'store'])->name('store');
+    Route::get('/{id}', [Tag::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [Tag::class, 'edit'])->name('edit');
+    Route::put('/{id}', [Tag::class, 'update'])->name('update');
+    Route::get('/{id}/delete', [Tag::class, 'delete'])->name('delete');
+    Route::delete('/{id}', [Tag::class, 'destroy'])->name('destroy');
 });
 
 

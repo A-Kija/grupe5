@@ -10,12 +10,12 @@
     <meta property="og:title" content="@yield('pavadinimas')">
     <meta property="og:description" content="@yield('description', 'Default description')">
     <meta property="og:type" content="website">
-    @vite(['resources/css/app.scss', 'resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.scss', 'resources/js/app.js'])
     <title>@yield('pavadinimas')</title>
 </head>
 <body>
 
-    @include('nav')
+    {{-- @include('nav') --}}
     @include('errors')
     @include('success')
     @include('info')

@@ -31,6 +31,10 @@ class Truck extends Model
         return $this->belongsTo(TruckBrand::class, 'truck_brand_id', 'id');
     }
 
+    public function tags() {
+        return $this->belongsToMany(Tag::class, 'tag_trucks', 'truck_id', 'tag_id');
+    }
+
     public function getPowerInKilowattsAttribute() {
         return round($this->power * 0.7355, 2);
     }
