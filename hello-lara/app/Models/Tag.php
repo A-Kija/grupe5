@@ -15,4 +15,5 @@ class Tag extends Model
     public function trucks() {
         return $this->belongsToMany(Truck::class, 'tag_trucks', 'tag_id', 'truck_id');
     }
+    
 }

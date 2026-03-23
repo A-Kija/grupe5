@@ -34,6 +34,7 @@ class Truck extends Model
     public function tags() {
         return $this->belongsToMany(Tag::class, 'tag_trucks', 'truck_id', 'tag_id');
     }
+    
 
     public function getPowerInKilowattsAttribute() {
         return round($this->power * 0.7355, 2);

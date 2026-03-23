@@ -16,4 +16,5 @@ class TruckBrand extends Model
     public function trucks() {
         return $this->hasMany(Truck::class, 'truck_brand_id', 'id');
     }
+    
 }
