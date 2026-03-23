@@ -142,3 +142,7 @@ Route::prefix('/trucks')->name('trucks-')->group(function () {
     Route::delete('/{id}', [T::class, 'destroy'])->name('destroy');
 });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -2,13 +2,16 @@
 
 @section('turinys')
 <div class="farm-container">
+    @auth
     <div class="new-link"><a href="{{route('trucks-create')}}">Naujas Sunkvežimis</a></div>
+    @endauth
     <a class="button cancel-button" href="{{route('truck-brands-index')}}">Visi modeliai</a>
     <div class="title">Visi Sunkvežimiai</div>
     <div class="sort-options">
         <span>Rūšiuoti, filtruoti pagal:</span>
         <form id="sort-form" action="{{ route('trucks-index') }}" method="GET">
-            <select name="sort">
+            <label for="sort">Rūšiuoti pagal:</label>
+            <select name="sort" id="sort">
                 <option value="">Nerūšiuoti</option>
                 @foreach ($sortOptions as $key => $option)
                 <option value="{{$key}}" {{ request('sort')===$key ? 'selected': '' }}>
@@ -16,7 +19,8 @@
                 </option>
                 @endforeach
             </select>
-            <select name="model">
+            <label for="model">Filtruoti pagal modelį:</label>
+            <select name="model" id="model">
                 <option value="">Visi modeliai</option>
                 @foreach ($trackBrands as $model)
                 <option value="{{$model->id}}" {{ request('model')==$model->id ? 'selected': '' }}>
@@ -24,7 +28,8 @@
                 </option>
                 @endforeach
             </select>
-            <select name="per_page">
+            <label for="per_page">Rodyti po:</label>
+            <select name="per_page" id="per_page">
                 @foreach ($perPageOptions as $option)
                 <option value="{{$option}}" {{ request('per_page')==$option ? 'selected': '' }}>
                     Rodyti po {{$option}}
@@ -44,12 +49,20 @@
                 $truck->model }}
             </div>
             <div class="buttons">
+
+                @auth
                 <a href="{{route('trucks-edit', ['id' => $truck->id, 'from-page' => $trucks->currentPage()])}}"
                     class="button button-edit">Redaguoti</a>
+                @endauth
+
                 <a href="{{route('trucks-show', ['id' => $truck->id, 'from-page' => $trucks->currentPage()])}}"
                     class="button button-show">Peržiūrėti</a>
+                
+                @auth
                 <a href="{{route('trucks-delete', ['id' => $truck->id, 'from-page' => $trucks->currentPage()])}}"
                     class="button button-delete">Ištrinti</a>
+                @endauth
+
             </div>
         </li>
         @empty

@@ -8,6 +8,12 @@ use App\Models\TruckBrand;
 
 class TruckController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth')->except(['index', 'show']); // visos funkcijos reikalauja autentifikacijos, išskyrus index ir show
+        // $this->middleware('auth'); niekur nekeleis, tai visos funkcijos reikalauja autentifikacijos
+    }
+
     public function index(Request $request) {
         $sortOptions = Truck::SORTABLE;
         $perPageOptions = Truck::PER_PAGE_OPTIONS;
