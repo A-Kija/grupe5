@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Truck;
 use App\Models\TruckBrand;
+use App\Models\Tag;
 
 class TruckController extends Controller
 {
@@ -61,6 +62,15 @@ class TruckController extends Controller
         $filterModel = $request->query('model'); // gauname model parametro reikšmę iš URL
         if ($filterModel) {
             $trucksQuery->where('truck_brand_id', $filterModel); // filtruojame pagal modelį
+        }
+
+        $filterTag = $request->query('tag'); // gauname tag parametro reikšmę iš URL
+        if ($filterTag) {
+            $trucksQuery->whereHas('tags', function ($query) use ($filterTag) {
+                $query->where('name', 'like', '%' . $filterTag . '%'); // ne tiksliai, bet ir dalinai atitinkantį tagą ieškome
+                // tiksliai atitinkantį tagą ieškome
+                // $query->where('name', $filterTag);
+            });
         }
 
         $perPage = $request->query('per_page', 17); // gauname per_page parametro reikšmę iš URL, numatytoji reikšmė 17

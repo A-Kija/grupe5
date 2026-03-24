@@ -28,6 +28,11 @@
                 </option>
                 @endforeach
             </select>
+
+            <label for="tag">Filtruoti pagal tagą:</label>
+            <input type="text" name="tag" id="tag" value="{{ request('tag') }}" placeholder="Įveskite tagą">
+   
+
             <label for="per_page">Rodyti po:</label>
             <select name="per_page" id="per_page">
                 @foreach ($perPageOptions as $option)

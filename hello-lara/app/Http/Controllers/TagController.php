@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tag;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
@@ -74,13 +75,26 @@ class TagController extends Controller
     }
 
 
-
     public function addToTruck(Request $request, $id) {
         
         $tagName = $request->input('tag_name');
+
+        // slugify name
+        $tagName = Str::slug($tagName);
+
         $truckId = $id;
 
         $tag = Tag::where('name', $tagName)->first();
+        /*
+
+        The Query Builder Pattern
+
+        The expression uses method chaining, a common pattern in Laravel. 
+        It starts with Tag::where(...), which begins constructing a database 
+        query against the tags table (implied by the Tag model). The where() method adds a 
+        condition to filter results.
+
+        */
 
         if (!$tag) {
             // create new tag if it doesn't exist
