@@ -152,6 +152,10 @@ Route::prefix('/tags')->name('tags-')->group(function () {
     Route::put('/{id}', [Tag::class, 'update'])->name('update');
     Route::get('/{id}/delete', [Tag::class, 'delete'])->name('delete');
     Route::delete('/{id}', [Tag::class, 'destroy'])->name('destroy');
+    // truck add tag
+    Route::post('/add-to-truck/{id}', [Tag::class, 'addToTruck'])->name('add-to-truck');
+    // truck remove tag
+    Route::delete('/remove-tag/{tag_id}/from-truck/{truck_id}', [Tag::class, 'removeFromTruck'])->name('remove-from-truck');
 });
 
 

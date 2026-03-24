@@ -215,6 +215,7 @@ a.button {
 
     .list-group-item {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
@@ -412,4 +413,50 @@ nav {
             }
         }
     }
+}
+
+.add-tags {
+    width: 100%;
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+}
+
+form.inline-small {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+
+    input {
+        width: auto;
+        flex: 1;
+        padding: 5px 10px;
+        margin: 0;
+    }
+
+    button {
+        width: auto;
+        padding: 0.45rem 0.8rem;
+        margin: 0;
+    }
+}
+
+.button.small-remove {
+    border: none;
+    padding: 0;
+    background: transparent;
+    min-width: auto;
+    transform: translateY(0);
+    box-shadow: none;
+    position: relative;
+    top: -3px;
 }
