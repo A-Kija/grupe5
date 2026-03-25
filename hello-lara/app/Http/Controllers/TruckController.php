@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Truck;
 use App\Models\TruckBrand;
 use App\Models\Tag;
+use App\Models\TruckImage;
 
 class TruckController extends Controller
 {
@@ -97,10 +98,27 @@ class TruckController extends Controller
             'color' => 'required|min:3|max:255',
             'power' => 'required|integer|min:1',
             'year' => 'required|integer|min:1900|max:' . date('Y'),
-            'truck_brand_id' => 'required|exists:truck_brands,id'
+            'truck_brand_id' => 'required|exists:truck_brands,id',
+            //<input type="file" name="images[]">
+            'images' => 'array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        Truck::create($request->all());
+        $truckId = Truck::create($request->all())->id;
+
+        // Save images if they exist
+        if ($request->hasFile('images')) {
+              foreach ($request->file('images') as $image) {
+                $savePath = public_path('images/trucks');
+                $fileName = time() . '_' . $image->getClientOriginalName();
+                $image->move($savePath, $fileName);
+                $path = 'images/trucks/' . $fileName;
+                TruckImage::create([
+                    'truck_id' => $truckId,
+                    'image_path' => $path
+                ]);
+            }
+        }
 
         return redirect()->route('trucks-index')->with('success', 'Sunkvežimis sėkmingai pridėtas!');
     }

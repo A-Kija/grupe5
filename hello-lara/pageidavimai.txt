@@ -1,5 +1,5 @@
 1. Paveiksliukas
-2. paveiksliukų galerija
+2. Paveiksliukų galerija
 3. Input autocomplete su duomenų bazės reikšmėmis
 4. Pranešimai į el. paštą
 5. Vartotojų rolės ir leidimai

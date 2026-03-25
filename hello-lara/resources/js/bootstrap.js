@@ -30,4 +30,43 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /*
+
+        <div class="image-upload-section">
+        <label>Nuotraukos:</label>
+        <div data-gallery class="images-inputs">
+            <div data-master class="image-input">
+                <input type="file" name="images[]">
+                <button type="button" class="remove-image-button" data-remove>-</button>
+            </div>
+        </div>
+        <button type="button" class="add-image-button" data-add-image>Pridėti nuotrauką</button>
+    </div>
+
+    */
+
+    const gallery = document.querySelector('[data-gallery]');
+    if (!gallery) return; // jei nėra galerijos, išeiti iš funkcijos
+    const masterImageInput = gallery.querySelector('[data-master]');
+    const addImageButton = document.querySelector('[data-add-image]');
+
+    addImageButton.addEventListener('click', () => {
+        const newImageInput = masterImageInput.cloneNode(true);
+        // remove data-master attribute from the cloned element to avoid confusion
+        // newImageInput.removeAttribute('data-master');
+        // add data-input attribute to the cloned element for easier targeting when removing
+        // newImageInput.dataset.input = 'true';
+        newImageInput.querySelector('input').value = ''; // išvalyti failo įvestį
+        gallery.appendChild(newImageInput);
+    });
+
+    gallery.addEventListener('click', (event) => {
+        if (event.target.matches('[data-remove]')) {
+            const imageInput = event.target.closest('[data-master]'); // nelabai gražu, bet veikia - rasti artimiausią tėvinį elementą su data-master atributu
+            if (imageInput) {
+                imageInput.remove();
+            }
+        }
+    });
+
 });

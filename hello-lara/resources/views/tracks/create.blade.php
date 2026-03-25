@@ -8,7 +8,7 @@
             $table->unsignedBigInteger('truck_brand_id');
 --}}
 
-<form method="POST" action="{{route('trucks-store')}}">
+<form method="POST" action="{{route('trucks-store')}}" enctype="multipart/form-data">
     <h1>Pridėti naują sunkvežimį</h1>
     <div>
         <label>Spalva:</label>
@@ -42,6 +42,17 @@
         @error('truck_brand_id')
         <div class="small-danger">{{ $message }}</div>
         @enderror
+    </div>
+
+    <div class="image-upload-section">
+        <label>Nuotraukos:</label>
+        <div data-gallery class="images-inputs">
+            <div data-master class="image-input">
+                <input type="file" name="images[]">
+                <button type="button" class="remove-image-button" data-remove>-</button>
+            </div>
+        </div>
+        <button type="button" class="add-image-button" data-add-image>Pridėti nuotrauką</button>
     </div>
 
     @csrf

@@ -27,6 +27,10 @@ class Truck extends Model
 
     const PER_PAGE_OPTIONS = [17, 5, 11, 29, 37];
 
+    public function images() {
+        return $this->hasMany(TruckImage::class, 'truck_id', 'id');
+    }
+    
     public function truckBrand() {
         return $this->belongsTo(TruckBrand::class, 'truck_brand_id', 'id');
     }
