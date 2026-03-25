@@ -9,7 +9,7 @@ class TruckBrand extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'logo_image'];
     public $timestamps = false; // išjungia created_at ir updated_at laukus
 
 

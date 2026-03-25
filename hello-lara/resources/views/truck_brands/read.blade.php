@@ -12,6 +12,13 @@
             {{ $truckBrand->name }}
             ({{ $truckBrand->trucks()->count() }})
             </div>
+            <div class="logo">
+                @if ($truckBrand->logo_image)
+                    <img src="{{ asset($truckBrand->logo_image) }}" alt="{{ $truckBrand->name }} logotipas" width="100">
+                @else
+                    <span>Nėra logotipo</span>
+                @endif
+            </div>
             <div class="buttons">
                 <a href="{{route('truck-brands-edit', ['id' => $truckBrand->id, 'from-page' => $truckBrands->currentPage()])}}" class="button button-edit">Redaguoti</a>
                 <a href="{{route('truck-brands-show', ['id' => $truckBrand->id, 'from-page' => $truckBrands->currentPage()])}}" class="button button-show">Peržiūrėti</a>

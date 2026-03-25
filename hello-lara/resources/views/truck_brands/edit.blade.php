@@ -2,7 +2,7 @@
 
 @section('turinys')
 
-<form method="POST" action="{{route('truck-brands-update', ['id' => $truckBrand->id])}}">
+<form method="POST" action="{{route('truck-brands-update', ['id' => $truckBrand->id])}}" enctype="multipart/form-data">
     <h1>Redaguoti modelį</h1>
     <div>
         <label>Modelis:</label>
@@ -10,6 +10,23 @@
         @error('name')
         <div class="small-danger">{{ $message }}</div>
         @enderror
+    </div>
+    <div>
+        <label>Logotipas (neprivaloma):</label>
+        <input type="file" name="logo_image" class="@error('logo_image') is-invalid @enderror">
+        @error('logo_image')
+        <div class="small-danger">{{ $message }}</div>
+        @enderror
+    </div>
+    <div>
+        @if ($truckBrand->logo_image)
+            <p>Dabartinis logotipas:</p>
+            <img src="{{ asset($truckBrand->logo_image) }}" alt="{{ $truckBrand->name }} logotipas" width="100">
+            <label class="with-cb"><input type="checkbox" name="remove_logo" value="1"> Pašalinti logotipą</label>
+        
+        @else
+            <p>Nėra logotipo</p>
+        @endif
     </div>
     @method('PUT')
     @csrf
