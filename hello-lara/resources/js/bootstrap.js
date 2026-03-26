@@ -1,4 +1,5 @@
 import 'bootstrap';
+import Sortable from 'sortablejs';
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -68,5 +69,19 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    console.log('Initializing Sortable on page load');
+
+    const sortableImagesContainer = document.querySelector('[data-sortable-images]');
+    if (sortableImagesContainer) {
+        console.log('Initializing Sortable on:', sortableImagesContainer);
+        new Sortable(sortableImagesContainer, {
+            animation: 150,
+            ghostClass: 'sortable-ghost'
+        });
+    }
+
+
+        
 
 });

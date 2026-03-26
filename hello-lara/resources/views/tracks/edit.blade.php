@@ -52,6 +52,7 @@ $table->unsignedBigInteger('truck_brand_id');
         <div data-gallery class="images-inputs">
             <div data-master class="image-input">
                 <input type="file" name="images[]">
+                <input type="hidden" name="existing_images[]" value="0">
                 <button type="button" class="remove-image-button" data-remove>-</button>
             </div>
 

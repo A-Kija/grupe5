@@ -17,6 +17,7 @@
         "vue": "^3.5.13"
     },
     "dependencies": {
-        "sass": "^1.97.3"
+        "sass": "^1.97.3",
+        "sortablejs": "^1.15.7"
     }
 }

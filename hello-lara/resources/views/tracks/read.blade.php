@@ -84,6 +84,14 @@
                     <button type="submit" class="button button-add">+</button>
                 </form>
             </div>
+            {{-- images --}}
+            <ul class="truck-images" data-sortable-images>
+                @foreach ($truck->images as $image)
+                <li>
+                <img src="{{ asset($image->image_path) }}" alt="Truck Image" class="truck-image">
+                </li>
+                @endforeach
+            </ul>
         </li>
         @empty
         <li class="list-group-item">Nėra sunkvežimių</li>

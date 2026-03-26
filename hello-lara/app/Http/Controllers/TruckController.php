@@ -147,12 +147,86 @@ class TruckController extends Controller
             'year' => 'required|integer|min:1900|max:' . date('Y'),
             'truck_brand_id' => 'required|exists:truck_brands,id'
         ]);
+        
+        // to delete images
+        // get existing images ids
+        $existingImageIds = $truck->images()->pluck('id')->toArray();
 
-                dd($request->all()); // išveda visus užklausos duomenis, įskaitant įkeltus failus
+        $existingInRequest = $request->input('existing_images', []); // gauname esamų nuotraukų ID, kurie buvo išsiųsti su forma
 
+        // ištriname nuotraukas, kurios yra duomenų bazėje, bet nebuvo išsiųstos su forma (naudotojas jas pašalino)
+        $imagesToDelete = array_diff($existingImageIds, $existingInRequest);
+
+        // get indexes of images that were sent with the form
+        $sentImageIndexes = array_keys($request->file('images')); // gauname indeksus tų nuotraukų, kurios buvo išsiųstos su forma
+        
+        $imagesToEdit = [];
+        foreach ($sentImageIndexes as $index) {
+            if ($existingInRequest[$index] != 0) { // jei tai nėra nauja nuotrauka (naujos nuotraukos turi reikšmę 0)
+                $imagesToEdit[] = [
+                    'id' => (int) $existingInRequest[$index], // pridedame prie ištrynimo sąrašo
+                    'file' => $request->file('images')[$index] // pridedame prie redagavimo sąrašo
+                ];
+            }
+        }
+        $imagesToCreate = [];
+        foreach ($sentImageIndexes as $index) {
+            if ($existingInRequest[$index] == 0) { // jei tai yra nauja nuotrauka (naujos nuotraukos turi reikšmę 0)
+                $imagesToCreate[] = $request->file('images')[$index]; // pridedame prie kūrimo sąrašo
+            }
+        }
+
+        // delete images
+        if (!empty($imagesToDelete)) {
+            // delete files from storage
+            $imagesToDeletePaths = TruckImage::whereIn('id', $imagesToDelete)->pluck('image_path')->toArray();
+            // ištriname failus iš saugyklos
+            foreach ($imagesToDeletePaths as $path) {
+                if (file_exists(public_path($path))) {
+                    unlink(public_path($path)); // ištriname failą iš saugyklos
+                }
+            }
+            // delete records from database
+            TruckImage::whereIn('id', $imagesToDelete)->delete();
+        }
+
+        // edit images
+        foreach ($imagesToEdit as $imageData) {
+            $image = TruckImage::find($imageData['id']);
+            if ($image) {
+                // delete old file
+                if (file_exists(public_path($image->image_path))) {
+                    unlink(public_path($image->image_path)); // ištriname seną failą iš saugyklos
+                }
+                // save new file
+                $savePath = public_path('images/trucks');
+                $fileName = time() . '_' . $imageData['file']->getClientOriginalName();
+                $imageData['file']->move($savePath, $fileName);
+
+                // save new path to database
+                $image->image_path = 'images/trucks/' . $fileName;
+                $image->save();
+            }
+        }
+
+        // create new images
+        foreach ($imagesToCreate as $imageFile) {
+            $savePath = public_path('images/trucks');
+            $fileName = time() . '_' . $imageFile->getClientOriginalName();
+            $imageFile->move($savePath, $fileName);
+            TruckImage::create([
+                'truck_id' => $truck->id,
+                'image_path' => 'images/trucks/' . $fileName
+            ]);
+        }
+
+
+        // dd($request->all(), $imagesToDelete, $imagesToEdit, $imagesToCreate); // išveda visus užklausos duomenis, įskaitant įkeltus failus
+
+        // atnaujiname sunkvežimio duomenis ne paveikdami nuotraukų duomenų bazės įrašus, nes juos tvarkome atskirai
         $truck->update($request->all());
 
-        return redirect()->route('trucks-index')->with('success', 'Sunkvežimis sėkmingai atnaujintas!');
+        return redirect()->route('trucks-index')->with('success_zinute', 'Sunkvežimis sėkmingai atnaujintas!');
     }
 
     public function delete($id) {
@@ -163,8 +237,18 @@ class TruckController extends Controller
 
     public function destroy($id) {
         $truck = Truck::findOrFail($id);
+        
+        // delete images from storage
+        foreach ($truck->images as $image) {
+            if (file_exists(public_path($image->image_path))) {
+                unlink(public_path($image->image_path)); // ištriname failą iš saugyklos
+            }
+        }
+        // delete image records from database
+        $truck->images()->delete();
+
         $truck->delete();
 
-        return redirect()->route('trucks-index')->with('success', 'Sunkvežimis sėkmingai ištrintas!');
+        return redirect()->route('trucks-index')->with('success_zinute', 'Sunkvežimis sėkmingai ištrintas!');
     }
 }
