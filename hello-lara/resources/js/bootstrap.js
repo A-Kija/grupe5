@@ -14,7 +14,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
 window.addEventListener('DOMContentLoaded', () => {
-   
+
     const logoInput = document.querySelector('input[name="logo_image"]');
     const removeLogoLabel = document.querySelector('input[name="remove_logo"]')?.closest('label'); // rasti "Pašalinti logotipą" checkbox labelį
 
@@ -70,18 +70,22 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    console.log('Initializing Sortable on page load');
 
-    const sortableImagesContainer = document.querySelector('[data-sortable-images]');
-    if (sortableImagesContainer) {
-        console.log('Initializing Sortable on:', sortableImagesContainer);
-        new Sortable(sortableImagesContainer, {
+
+
+
+
+
+
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+    const sortableImages = document.querySelectorAll('[data-sortable-images]');
+    sortableImages.forEach((imageList) => {
+        Sortable.create(imageList, {
             animation: 150,
-            ghostClass: 'sortable-ghost'
+            ghostClass: 'sortable-ghost',
+            onEnd: function (evt) {}
         });
-    }
-
-
-        
-
+    });
 });
