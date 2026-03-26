@@ -501,6 +501,14 @@ label.with-cb {
             gap: 0.5rem;
             margin-bottom: 0.75rem;
 
+            img {
+                width: 110px;
+                height: 110px;
+                object-fit: cover;
+                border-radius: 8px;
+                border: 1px solid #334155;
+            }
+
 
             input[type="file"] {
                 flex: 1;

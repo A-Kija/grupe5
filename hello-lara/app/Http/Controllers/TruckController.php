@@ -104,6 +104,8 @@ class TruckController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
+
+
         $truckId = Truck::create($request->all())->id;
 
         // Save images if they exist
@@ -145,6 +147,8 @@ class TruckController extends Controller
             'year' => 'required|integer|min:1900|max:' . date('Y'),
             'truck_brand_id' => 'required|exists:truck_brands,id'
         ]);
+
+                dd($request->all()); // išveda visus užklausos duomenis, įskaitant įkeltus failus
 
         $truck->update($request->all());
 

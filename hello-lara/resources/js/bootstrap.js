@@ -53,16 +53,16 @@ window.addEventListener('DOMContentLoaded', () => {
     addImageButton.addEventListener('click', () => {
         const newImageInput = masterImageInput.cloneNode(true);
         // remove data-master attribute from the cloned element to avoid confusion
-        // newImageInput.removeAttribute('data-master');
+        newImageInput.removeAttribute('data-master');
         // add data-input attribute to the cloned element for easier targeting when removing
-        // newImageInput.dataset.input = 'true';
+        newImageInput.dataset.input = 'true';
         newImageInput.querySelector('input').value = ''; // išvalyti failo įvestį
         gallery.appendChild(newImageInput);
     });
 
     gallery.addEventListener('click', (event) => {
         if (event.target.matches('[data-remove]')) {
-            const imageInput = event.target.closest('[data-master]'); // nelabai gražu, bet veikia - rasti artimiausią tėvinį elementą su data-master atributu
+            const imageInput = event.target.closest('[data-input]'); // nelabai gražu, bet veikia - rasti artimiausią tėvinį elementą su data-master atributu
             if (imageInput) {
                 imageInput.remove();
             }
