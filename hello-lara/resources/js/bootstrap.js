@@ -81,11 +81,27 @@ window.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('DOMContentLoaded', () => {
     const sortableImages = document.querySelectorAll('[data-sortable-images]');
+
     sortableImages.forEach((imageList) => {
         Sortable.create(imageList, {
             animation: 150,
             ghostClass: 'sortable-ghost',
-            onEnd: function (evt) {}
+            onEnd: function (_) { // pasileidžia, kai baigiamas drag-and-drop
+                const url = imageList.dataset.url; // gauti URL iš data-url atributo
+                const imageItems = imageList.querySelectorAll('.truck-image-item');
+                const imagesOrder = Array.from(imageItems).map(item => +item.dataset.imageId); // sukurti masyvą su nuotraukų ID tvarka
+
+                // Siųsti naują nuotraukų tvarką į serverį per AJAX
+                axios.post(url, {
+                    images_order: imagesOrder
+                })
+                .then(response => {
+                    console.log('Nuotraukų tvarka sėkmingai atnaujinta!');
+                })
+                .catch(error => {
+                    console.error('Klaida atnaujinant nuotraukų tvarką:', error);   
+                });
+            }
         });
     });
 });

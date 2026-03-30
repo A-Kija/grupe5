@@ -141,6 +141,7 @@ Route::prefix('/trucks')->name('trucks-')->group(function () {
     Route::put('/{id}', [T::class, 'update'])->name('update'); // /trucks/{id} trucks-update
     Route::get('/{id}/delete', [T::class, 'delete'])->name('delete');
     Route::delete('/{id}', [T::class, 'destroy'])->name('destroy');
+    Route::post('/{id}/update-images-order', [T::class, 'updateImagesOrder'])->name('update-images-order');
 });
 
 Route::prefix('/tags')->name('tags-')->group(function () {

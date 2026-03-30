@@ -1,6 +1,9 @@
 @extends('tevas')
 
 @section('turinys')
+
+
+
 <div class="farm-container">
     @auth
     <div class="new-link"><a href="{{route('trucks-create')}}">Naujas Sunkvežimis</a></div>
@@ -85,9 +88,9 @@
                 </form>
             </div>
             {{-- images --}}
-            <ul class="truck-images" data-sortable-images>
-                @foreach ($truck->images as $image)
-                <li>
+            <ul class="truck-images" data-sortable-images data-url="{{ route('trucks-update-images-order', ['id' => $truck->id]) }}">
+                @foreach ($truck->orderedImages() as $image)
+                <li class="truck-image-item" data-image-id="{{ $image->id }}">
                 <img src="{{ asset($image->image_path) }}" alt="Truck Image" class="truck-image">
                 </li>
                 @endforeach

@@ -81,7 +81,7 @@ class TruckController extends Controller
         }
 
         $trucks = $trucksQuery->paginate($perPage)->withQueryString(); // išlaiko sort parametro reikšmę puslapių perjungimo metu
-
+        
         return view('tracks.read', compact('trucks', 'sortOptions', 'trackBrands', 'perPageOptions'));
     }
 
@@ -250,5 +250,14 @@ class TruckController extends Controller
         $truck->delete();
 
         return redirect()->route('trucks-index')->with('success_zinute', 'Sunkvežimis sėkmingai ištrintas!');
+    }
+
+    public function updateImagesOrder(Request $request, $id) {
+        $truck = Truck::findOrFail($id);
+        $imagesOrder = $request->input('images_order'); // gauname naują nuotraukų tvarką iš užklausos
+        $truck->images_order = $imagesOrder; // atnaujiname sunkvežimio nuotraukų tvarką
+        $truck->save(); // išsaugome pakeitimus duomenų bazėje
+
+        return response()->json(['message' => 'Nuotraukų tvarka sėkmingai atnaujinta!']);
     }
 }

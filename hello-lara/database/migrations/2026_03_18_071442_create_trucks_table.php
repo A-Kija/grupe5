@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('color');
             $table->unsignedInteger('power');
             $table->year('year');
+            // custom images order 
+            $table->json('images_order')->nullable();
             $table->unsignedBigInteger('truck_brand_id');
             $table->foreign('truck_brand_id')->references('id')->on('truck_brands')->onDelete('restrict');
         });
