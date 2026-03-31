@@ -15,6 +15,20 @@
             class="button cancel-button">Visi sunkvežimiai</a>
     </div>
 
+    {{-- images --}}
+    <div class="swiper">
+        <ul class="swiper-wrapper">
+            @foreach ($truck->orderedImages() as $image)
+            <li class="swiper-slide">
+                <img src="{{ asset($image->image_path) }}" alt="Truck Image">
+            </li>
+            @endforeach
+        </ul>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
     @endsection
 
     @section('pavadinimas', 'Sunkvežimio informacija')

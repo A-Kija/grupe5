@@ -1,5 +1,11 @@
 import 'bootstrap';
 import Sortable from 'sortablejs';
+import Swiper from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
+// import Swiper and modules styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -95,13 +101,76 @@ window.addEventListener('DOMContentLoaded', () => {
                 axios.post(url, {
                     images_order: imagesOrder
                 })
-                .then(response => {
-                    console.log('Nuotraukų tvarka sėkmingai atnaujinta!');
-                })
-                .catch(error => {
-                    console.error('Klaida atnaujinant nuotraukų tvarką:', error);   
-                });
+                    .then(response => {
+                        console.log('Nuotraukų tvarka sėkmingai atnaujinta!');
+                    })
+                    .catch(error => {
+                        console.error('Klaida atnaujinant nuotraukų tvarką:', error);
+                    });
             }
         });
     });
+});
+
+const swiper = new Swiper('.swiper', {
+    modules: [Navigation, Pagination],
+    // Optional parameters
+     slidesPerView: 2,
+    direction: 'horizontal',
+    loop: true,
+
+    // If we need pagination
+    pagination: {
+        el: '.swiper-pagination',
+    },
+
+    // Navigation arrows
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+});
+
+
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    const autoTagInput = document.querySelector('[data-auto-tag]');
+    const suggestionsList = document.querySelector('[data-tag-suggestions-list]');
+
+    if (autoTagInput) {
+        autoTagInput.addEventListener('input', () => {
+            const query = autoTagInput.value;
+
+            if (query.length === 0) {
+                suggestionsList.innerHTML = '';
+                return;
+            }
+
+            const url = suggestionsList.dataset.url;
+
+            axios.get(url, {
+                params: { query }
+            })
+                .then(response => {
+                    const suggestions = response.data;
+                    suggestionsList.innerHTML = '';
+
+                    suggestions.forEach(suggestion => {
+                        const li = document.createElement('li');
+                        li.textContent = suggestion.name;
+                        li.addEventListener('click', () => {
+                            autoTagInput.value = suggestion.name;
+                            suggestionsList.innerHTML = '';
+                        });
+                        suggestionsList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Klaida gaunant tagų pasiūlymus:', error);
+                });
+        });
+    }
+
+
 });

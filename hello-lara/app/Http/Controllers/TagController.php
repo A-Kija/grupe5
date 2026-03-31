@@ -120,4 +120,12 @@ class TagController extends Controller
         return redirect()->back()->with('success_zinute', 'Žymė sėkmingai pašalinta iš sunkvežimio');
     }
 
+    public function suggestions(Request $request) {
+        $query = $request->input('query');
+
+        $suggestions = Tag::where('name', 'LIKE', '%' . $query . '%')->limit(7)->get();
+
+        return response()->json($suggestions);
+    }
+
 }

@@ -10,3 +10,4 @@ tasks/
 *.tiff
 *.tif
 /vendor/
+node_modules/

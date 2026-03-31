@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Farm;
 use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,6 +50,13 @@ class DatabaseSeeder extends Seeder
             $ind = rand(0, 7);
             $color = $mas[$ind];
          */
+
+            $faker = Faker::create();
+            for($i = 0; $i < 123; $i++) {
+                DB::table('tags')->insert([
+                    'name' => $faker->unique()->word(),
+                ]);
+            }
 
 
 

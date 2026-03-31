@@ -17,7 +17,7 @@
             <select name="sort" id="sort">
                 <option value="">Nerūšiuoti</option>
                 @foreach ($sortOptions as $key => $option)
-                <option value="{{$key}}" {{ request('sort')===$key ? 'selected': '' }}>
+                <option value="{{$key}}" {{ request('sort')===$key ? 'selected' : '' }}>
                     {{ $option }}
                 </option>
                 @endforeach
@@ -32,14 +32,20 @@
                 @endforeach
             </select>
 
-            <label for="tag">Filtruoti pagal tagą:</label>
-            <input type="text" name="tag" id="tag" value="{{ request('tag') }}" placeholder="Įveskite tagą">
-   
+            <div class="filter-tags">
+                <label for="tag">Filtruoti pagal tagą:</label>
+                <input data-auto-tag type="text" name="tag" id="tag" value="{{ request('tag') }}" placeholder="Įveskite tagą" autocomplete="off">
+                <div class="auto-complete-suggestions">
+                    <ul data-tag-suggestions-list data-url="{{ route('tags-suggestions') }}">
+                    </ul>
+                </div>
+            </div>
+
 
             <label for="per_page">Rodyti po:</label>
             <select name="per_page" id="per_page">
                 @foreach ($perPageOptions as $option)
-                <option value="{{$option}}" {{ request('per_page')==$option ? 'selected': '' }}>
+                <option value="{{$option}}" {{ request('per_page')==$option ? 'selected' : '' }}>
                     Rodyti po {{$option}}
                 </option>
                 @endforeach
@@ -65,7 +71,7 @@
 
                 <a href="{{route('trucks-show', ['id' => $truck->id, 'from-page' => $trucks->currentPage()])}}"
                     class="button button-show">Peržiūrėti</a>
-                
+
                 @auth
                 <a href="{{route('trucks-delete', ['id' => $truck->id, 'from-page' => $trucks->currentPage()])}}"
                     class="button button-delete">Ištrinti</a>
@@ -75,23 +81,27 @@
             <div class="add-tags">
                 @foreach ($truck->tags as $tag)
                 <span class="tag">#{{ $tag->name }}</span>
-                <form class="inline-small" action="{{ route('tags-remove-from-truck', ['tag_id' => $tag->id, 'truck_id' => $truck->id]) }}" method="POST">
+                <form class="inline-small"
+                    action="{{ route('tags-remove-from-truck', ['tag_id' => $tag->id, 'truck_id' => $truck->id]) }}"
+                    method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="button small-remove">X</button>
                 </form>
                 @endforeach
-                <form class="inline-small" action="{{ route('tags-add-to-truck', ['id' => $truck->id]) }}" method="POST">
+                <form class="inline-small" action="{{ route('tags-add-to-truck', ['id' => $truck->id]) }}"
+                    method="POST">
                     @csrf
                     <input type="text" name="tag_name" placeholder="Pridėti žymę" required>
                     <button type="submit" class="button button-add">+</button>
                 </form>
             </div>
             {{-- images --}}
-            <ul class="truck-images" data-sortable-images data-url="{{ route('trucks-update-images-order', ['id' => $truck->id]) }}">
+            <ul class="truck-images" data-sortable-images
+                data-url="{{ route('trucks-update-images-order', ['id' => $truck->id]) }}">
                 @foreach ($truck->orderedImages() as $image)
                 <li class="truck-image-item" data-image-id="{{ $image->id }}">
-                <img src="{{ asset($image->image_path) }}" alt="Truck Image" class="truck-image">
+                    <img src="{{ asset($image->image_path) }}" alt="Truck Image" class="truck-image">
                 </li>
                 @endforeach
             </ul>
