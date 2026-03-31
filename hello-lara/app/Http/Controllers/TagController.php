@@ -123,7 +123,15 @@ class TagController extends Controller
     public function suggestions(Request $request) {
         $query = $request->input('query');
 
-        $suggestions = Tag::where('name', 'LIKE', '%' . $query . '%')->limit(7)->get();
+        // $suggestions = Tag::where('name', 'LIKE', '%' . $query . '%')->limit(7)->get();
+
+        // tags and all trucks for each tag
+        $suggestions = Tag::where('name', 'LIKE', '%' . $query . '%')
+            ->with('trucks') // eager load trucks relationship
+            ->limit(7)
+            ->get();
+            
+
 
         return response()->json($suggestions);
     }

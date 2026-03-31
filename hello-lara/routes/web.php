@@ -148,6 +148,8 @@ Route::prefix('/tags')->name('tags-')->group(function () {
     Route::get('/', [Tag::class, 'index'])->name('index');
     Route::get('/create', [Tag::class, 'create'])->name('create');
     Route::post('/', [Tag::class, 'store'])->name('store');
+    // auto-complete tags suggestions
+    Route::get('/ts', [Tag::class, 'suggestions'])->name('suggestions');
     Route::get('/{id}', [Tag::class, 'show'])->name('show');
     Route::get('/{id}/edit', [Tag::class, 'edit'])->name('edit');
     Route::put('/{id}', [Tag::class, 'update'])->name('update');
@@ -157,8 +159,8 @@ Route::prefix('/tags')->name('tags-')->group(function () {
     Route::post('/add-to-truck/{id}', [Tag::class, 'addToTruck'])->name('add-to-truck');
     // truck remove tag
     Route::delete('/remove-tag/{tag_id}/from-truck/{truck_id}', [Tag::class, 'removeFromTruck'])->name('remove-from-truck');
-    // auto-complete tags
-    Route::get('/suggestions', [Tag::class, 'suggestions'])->name('suggestions');
+    
+    
 });
 
 

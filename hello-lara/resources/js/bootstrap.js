@@ -144,6 +144,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             if (query.length === 0) {
                 suggestionsList.innerHTML = '';
+                suggestionsList.style.display = 'none'; // paslėpti pasiūlymų sąrašą, jei įvestis tuščia
                 return;
             }
 
@@ -155,13 +156,21 @@ window.addEventListener('DOMContentLoaded', () => {
                 .then(response => {
                     const suggestions = response.data;
                     suggestionsList.innerHTML = '';
-
+                    suggestionsList.style.display = 'block'; // parodyti pasiūlymų sąrašą
                     suggestions.forEach(suggestion => {
                         const li = document.createElement('li');
                         li.textContent = suggestion.name;
+                        // list all trucks that have this tag
+                        if (suggestion.trucks && suggestion.trucks.length > 0) {
+                            const trucksText = suggestion.trucks.map(truck => truck.color).join(', ');
+                            li.textContent += ` (${trucksText})`;
+                        }
+
+
                         li.addEventListener('click', () => {
                             autoTagInput.value = suggestion.name;
                             suggestionsList.innerHTML = '';
+                            suggestionsList.style.display = 'none'; // paslėpti pasiūlymų sąrašą po pasirinkimo
                         });
                         suggestionsList.appendChild(li);
                     });

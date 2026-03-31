@@ -36,7 +36,7 @@
                 <label for="tag">Filtruoti pagal tagą:</label>
                 <input data-auto-tag type="text" name="tag" id="tag" value="{{ request('tag') }}" placeholder="Įveskite tagą" autocomplete="off">
                 <div class="auto-complete-suggestions">
-                    <ul data-tag-suggestions-list data-url="{{ route('tags-suggestions') }}">
+                    <ul data-tag-suggestions-list data-url="{{ route('tags-suggestions') }}" style="display: none">
                     </ul>
                 </div>
             </div>
