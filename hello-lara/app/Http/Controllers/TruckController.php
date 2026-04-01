@@ -7,6 +7,9 @@ use App\Models\Truck;
 use App\Models\TruckBrand;
 use App\Models\Tag;
 use App\Models\TruckImage;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TruckCreated;
 
 class TruckController extends Controller
 {
@@ -104,8 +107,6 @@ class TruckController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-
-
         $truckId = Truck::create($request->all())->id;
 
         // Save images if they exist
@@ -121,6 +122,10 @@ class TruckController extends Controller
                 ]);
             }
         }
+
+        // create new email notification
+        Mail::to('example@example.com')->send(new TruckCreated($truckId));
+
 
         return redirect()->route('trucks-index')->with('success', 'Sunkvežimis sėkmingai pridėtas!');
     }
