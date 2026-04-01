@@ -107,7 +107,8 @@ class TruckController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $truckId = Truck::create($request->all())->id;
+        $truck = Truck::create($request->all());
+        $truckId = $truck->id;
 
         // Save images if they exist
         if ($request->hasFile('images')) {
@@ -124,7 +125,7 @@ class TruckController extends Controller
         }
 
         // create new email notification
-        Mail::to('example@example.com')->send(new TruckCreated($truckId));
+        Mail::to('arvydas.kijakauskas@gmail.com')->send(new TruckCreated($truck));
 
 
         return redirect()->route('trucks-index')->with('success', 'Sunkvežimis sėkmingai pridėtas!');

@@ -16,9 +16,9 @@ class TruckCreated extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($truckId)
+    public function __construct($truck)
     {
-        $this->truckId = $truckId;
+        $this->truck = $truck;
     }
 
     /**
@@ -37,9 +37,9 @@ class TruckCreated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.truck_created',
+            markdown: 'emails.truck_created',
             with: [
-                'truckId' => $this->truckId,
+                'truck' => $this->truck,
             ]
         );
     }
